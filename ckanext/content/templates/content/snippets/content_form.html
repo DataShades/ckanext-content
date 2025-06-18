@@ -1,0 +1,16 @@
+<form action="" method="post">
+    {%- for field in schema.content_fields -%}
+        {#% set field_snippet = field.form_snippet if field.form_snippet else 'text.html' %#}
+        {%- set field_snippet = field.form_snippet|default(
+        'repeating_subfields.html' if field.repeating_subfields else 'text.html') -%}
+        {%- snippet h.guess_snippet_from(field_snippet),
+            field=field,
+            data=data,
+            errors=errors
+        -%}
+    {%- endfor -%}
+
+    <button type="submit" class="btn btn-primary">
+        {{ _('Create') if create else _('Update') }}
+    </button>
+</form>

@@ -1,0 +1,14 @@
+version: 1
+groups:
+    - annotation: content configuration
+      options:
+          - key: ckanext.content.schemas
+            type: list
+          - key: ckanext.content.presets
+            type: list
+          - key: ckanext.content.form_snippets_path
+            type: list
+            default: content/form_snippets/
+          - key: ckanext.content.display_snippets_path
+            type: list
+            default: content/display_snippets/

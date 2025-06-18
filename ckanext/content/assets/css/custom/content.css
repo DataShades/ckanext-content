@@ -1,0 +1,7 @@
+#content.content-page {
+    .content-wrapper {
+        background-color: var(--white-color);
+        min-height: 300px;
+        position: relative;
+    }
+}

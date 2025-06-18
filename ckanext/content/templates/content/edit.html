@@ -1,0 +1,33 @@
+{% extends "blocksmith/page.html" %}
+
+{% import 'macros/form.html' as form %}
+
+{% block title %}
+    {{ _("Edit Content") }}
+{% endblock %}
+
+{% block breadcrumb_content %}
+    {{ super() }}
+    <li><a href="{{ h.url_for('ckan_content.edit', type=type, id=id) }}">{{ _("Edit") }} {{ schema.label }}</a></li>
+{% endblock %}
+
+{% block main_content %}
+    {% block flash %}{{ super() }}{% endblock %}
+    {% block toolbar %}{{ super() }}{% endblock %}
+
+    <div class="" style="background-color: #fff; min-height: 300px; position: relative;">
+        {% block primary %}
+        <div class="module-content">
+                <div class="d-flex justify-content-end">
+                    <a class="btn btn-outline-primary me-2" href="{{ h.url_for('ckan_content.list') }}">
+                        {{ _("Back") }}
+                    </a>
+                    <a class="btn btn-primary" href="{{ h.url_for('ckan_content.read', type=type, id=id) }}">
+                        {{ _("View") }}
+                    </a>
+                </div>
+                {% snippet 'content/snippets/content_form.html', data=data, schema=schema, errors=errors %}
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}

@@ -1,0 +1,48 @@
+# content-js:
+#   filter: rjsmin
+#   output: ckanext-content/%(version)s-content.js
+#   contents:
+#     - js/content.js
+#   extra:
+#     preload:
+#       - base/main
+
+content-css:
+  filter: cssrewrite
+  output: ckanext-content/%(version)s-content.css
+  contents:
+    - css/custom/variables.css
+    - css/custom/content.css
+  
+    - css/styles.css
+  extra:
+    preload:
+      - base/main
+      - base/ckan
+
+
+content-admin-js:
+  filter: rjsmin
+  output: ckanext-content/%(version)s-content-admin.js
+  contents:
+    - js/vendor/sweetalert2.min.js
+    - js/vendor/tabulator.min.js
+
+    - js/ckan-content-list.js
+  extra:
+    preload:
+      - base/main
+
+
+content-admin-css:
+  filter: cssrewrite
+  output: ckanext-content/%(version)s-content-admin.css
+  contents:
+    - css/vendor/tabulator.min.css
+    - css/vendor/tabulator-theme.min.css
+
+    - css/admin.css
+  extra:
+    preload:
+      - base/main
+      - base/ckan

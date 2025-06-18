@@ -1,0 +1,43 @@
+{% extends "content/page.html" %}
+
+{% block subtitle %}
+    {{ content.title }}
+{% endblock %}
+
+{% block breadcrumb_content %}
+    {{ super() }}
+    <li><a href="{{ h.url_for('ckan_content.read', type=type ,id=id) }}">{{ content.title }}</a></li>
+{% endblock %}
+
+{%- block content %}
+    {% block maintag %}<div class="main content-main">{% endblock %}
+    <div id="content" class="content-{{ content.id }} content-page content-type-{{ content.type }} container">
+        {% block main_content %}
+            {% block flash %}{{ super() }}{% endblock %}
+            {% block toolbar %}{{ super() }}{% endblock %}
+        
+            <article class="content-wrapper">
+                {% block primary %}
+                    <div class="module-content">
+                        {%- set exclude_fields = [
+                        'title',
+                        ] -%}
+        
+                        <h1>
+                            {{ content.title }}
+                        </h1>
+        
+                        {%- for field in schema.content_fields -%}
+                            {%- if field.field_name not in exclude_fields
+                                    and field.display_snippet is not none -%}
+                                {%- snippet 'content/snippets/display_field.html',
+                                    field=field, data=content.data, schema=schema -%}
+                            {%- endif -%}
+                        {%- endfor -%}
+                    </div>
+                {% endblock %}
+            </article>
+        {% endblock %}
+        </div>
+    </div>
+{% endblock -%}

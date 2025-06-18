@@ -1,0 +1,67 @@
+#ckan-content-list {
+    margin: 0;
+
+    .tabulator-footer {
+        border-top: unset;
+
+        .tabulator-footer-contents {
+            padding: 0;
+
+            .tabulator-paginator {
+                .tabulator-page {
+                    border-radius: 0.25rem;
+                    padding: 6px 12px;
+
+                    &.active,
+                    &:hover,
+                    &:focus,
+                    &:active {
+                        background-color: #206b82;
+                        border-color: #206b82;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+
+    .tabulator-alert {
+        display: none;
+    }
+
+    .ckan-content-loading-indicator {
+        top: 4rem;
+    }
+}
+
+.ckan-content-search {
+    display: flex;
+    position: absolute;
+    bottom: 12px;
+    left: 16px;
+    max-width: 15rem;
+    width: 100%;
+
+    #ckan-content-search {
+        border: 1px solid #aaa;
+        box-shadow: unset;
+    }
+
+    #ckan-content-clear {
+        display: none;
+        position: absolute;
+        right: 0;
+        height: 100%;
+        width: 35px;
+        height: 33px;
+        justify-content: center;
+        top: 1px;
+        right: 1px;
+        border: unset;
+        box-shadow: unset;
+
+        &.search-active {
+            display: flex;
+        }
+    }
+}

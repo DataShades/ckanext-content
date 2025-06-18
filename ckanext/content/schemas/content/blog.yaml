@@ -1,0 +1,34 @@
+label: Blog
+content_type: blog
+about: Content for custom pages in CKAN
+about_url: http://github.com/datashades/ckanext-content
+
+
+content_fields:
+
+- field_name: title
+  label: Title
+  validators: not_empty unicode_safe
+  form_placeholder: eg. A descriptive title
+
+- field_name: alias
+  label: Alias
+  validators: not_empty alias_unique is_relative_path unicode_safe
+  required: true
+  form_placeholder: eg. /my-blog
+
+- field_name: notes
+  label: Description
+  form_snippet: markdown.html
+  display_snippet: markdown.html
+  form_placeholder: eg. Some useful notes about the data
+
+- field_name: state
+  label: State
+  preset: select
+  choices:
+    - value: 'draft'
+      label: 'Draft'
+    - value: 'active'
+      label: 'Published'
+  required: true

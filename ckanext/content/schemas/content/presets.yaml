@@ -1,0 +1,8 @@
+presets:
+- preset_name: content_title
+  values:
+    validators: not_empty unicode_safe
+
+- preset_name: content_text
+  values:
+    validators: ignore_missing unicode_safe

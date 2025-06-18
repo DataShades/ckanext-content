@@ -1,0 +1,25 @@
+{% extends "blocksmith/page.html" %}
+
+{% import 'macros/form.html' as form %}
+
+{% block title %}
+    {{ _("Create Content") }}
+{% endblock %}
+
+{% block breadcrumb_content %}
+    {{ super() }}
+    <li><a href="{{ h.url_for('ckan_content.create', type=schema.content_type) }}">{{ _("Create") }} {{ schema.label }}</a></li>
+{% endblock %}
+
+{% block main_content %}
+    {% block flash %}{{ super() }}{% endblock %}
+    {% block toolbar %}{{ super() }}{% endblock %}
+
+    <div class="" style="background-color: #fff; min-height: 300px; position: relative;">
+        {% block primary %}
+        <div class="module-content">
+                {% snippet 'content/snippets/content_form.html', data=data, schema=schema, errors=errors, create=True %}
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}
