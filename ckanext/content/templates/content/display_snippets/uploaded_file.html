@@ -1,0 +1,10 @@
+{% if data.get(field.field_name) %}
+    {% set url = h.uploaded_file_url(data[field.field_name]) %}
+    <a href="{{ url }}">
+        {% if field.uploaded_file_text %}
+            {{ field.uploaded_file_text }}
+        {% else %}
+            {{ data[field.field_name] }}
+        {% endif %}
+    </a>
+{% endif %}

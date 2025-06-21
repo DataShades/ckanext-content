@@ -65,3 +65,9 @@
         }
     }
 }
+
+.ck-editor__editable_inline:not(.ck-comment__input *) {
+    height: 200px;
+    resize: vertical;
+    overflow-y: auto;
+}

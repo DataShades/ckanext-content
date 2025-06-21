@@ -19,8 +19,10 @@
             <article class="content-wrapper">
                 {% block primary %}
                     <div class="module-content">
+                        {%- snippet 'content/snippets/read_actions.html', type=type, id=id %}
                         {%- set exclude_fields = [
                         'title',
+                        'state',
                         ] -%}
         
                         <h1>

@@ -8,6 +8,7 @@ import ckan.plugins.toolkit as tk
 from ckan.types import Context
 
 from ckanext.content.model.content import ContentModel
+from ckanext.content.model.content_revision import ContentRevisionModel
 from ckanext.content import utils
 
 ValidationError = logic.ValidationError
@@ -122,6 +123,11 @@ class EditView(MethodView):
         except dict_fns.DataError:
             return tk.base.abort(400, tk._("Integrity Error"))
 
+        for f_name, file in tk.request.files.items():
+            correct_key = f_name.split("_content-")
+            if file.filename and len(correct_key) and correct_key[1] == "upload":
+                form_data[correct_key[0]] = file
+
         schema = tk.h.get_content_schema(type)
         data_dict = {
             "schema": schema,
@@ -182,7 +188,66 @@ class ListView(MethodView):
         return tk.render("content/list.html", extra_vars={"content": content})
 
 
+class RevisionsListView(MethodView):
+    def get(self, type, id):
+        content = ContentModel.get_by_id(id)
+
+        if not content:
+            return tk.abort(404, "Page not found")
+
+        try:
+            tk.check_access("view_ckan_content_list", make_context(), {})
+        except tk.NotAuthorized:
+            return tk.abort(404, "Page not found")
+
+        revisions = [
+            rev.dictize({}) for rev in ContentRevisionModel.get_by_content_id(id)
+        ]
+
+        return tk.render(
+            "content/revisions.html",
+            extra_vars={"content": content, "revisions": revisions},
+        )
+
+
+class ReadRevisionView(MethodView):
+    def _check_access(self, type: str, content_id: str, id: str):
+        try:
+            tk.check_access("read_ckan_content", make_context(), {"id": id})
+        except tk.NotAuthorized:
+            return tk.abort(404, "Page not found")
+
+    def get(self, type: str, content_id: str, id: str):
+        revision = ContentRevisionModel.get_by_id(id)
+
+        if not content:
+            return tk.abort(404, "Page not found")
+
+        self._check_access(type, content_id, id)
+
+        schema = tk.h.get_content_schema(type)
+
+        template = tk.h.guess_content_type_snippet(type)
+        return tk.render(
+            template,
+            extra_vars={
+                "schema": schema,
+                "type": type,
+                "id": content_id,
+                "content": revision.dictize({}),
+            },
+        )
+
+
 content.add_url_rule("/content/<type>/<id>", view_func=ReadView.as_view("read"))
+content.add_url_rule(
+    "/content/<type>/<id>/revisions",
+    view_func=RevisionsListView.as_view("content_revisions"),
+)
+content.add_url_rule(
+    "/content/<type>/<content_id>/revisions/<id>",
+    view_func=ReadRevisionView.as_view("read_revision"),
+)
 content.add_url_rule("/content/<type>/create", view_func=CreateView.as_view("create"))
 content.add_url_rule("/content/<type>/edit/<id>", view_func=EditView.as_view("edit"))
 content.add_url_rule("/content/list", view_func=ListView.as_view("list"))

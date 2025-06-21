@@ -13,45 +13,21 @@ content_fields:
 
 - field_name: alias
   label: Alias
-  validators: not_empty alias_unique unicode_safe
+  validators: not_empty alias_unique is_relative_path unicode_safe
   required: true
   form_placeholder: eg. /my-page
+  form_attrs:
+    data-module: ckan-content-autoslug
+    data-module-target: title
+    data-module-prefix: page
 
 - field_name: notes
   label: Body
-  form_snippet: markdown.html
-  display_snippet: markdown.html
+  form_snippet: textarea.html
+  display_snippet: html.html
   form_placeholder: eg. Some useful notes about the data
-
-- field_name: access_rights
-  label: Privacy Level
-  preset: select
-  choices:
-    - value: 'public'
-      label: 'Public'
-    - value: 'internal'
-      label: 'Internal'
-    - value: 'confidential'
-      label: 'Confidential'
-    - value: 'highly_confidential'
-      label: 'Highly Confidential'
-  required: true
-  help_text: "Data classification allows for the implementation of all necessary means. ARTM uses a 4-level classification system: Public, Internal, Confidential and Highly Confidential."
-- field_name: temporal_coverage
-  label: Temporal coverage
-  repeating_subfields:
-    - field_name: start
-      label: Start
-      preset: select
-      choices:
-        - value: 'public'
-          label: 'Public'
-        - value: 'internal'
-          label: 'Internal'
-    - field_name: end
-      label: End
-      validators: not_empty unicode_safe
-  help_text: Time period to which the data relates.
+  form_attrs:
+    data-module: ckan-content-ckeditor
 
 - field_name: state
   label: State

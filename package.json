@@ -1,0 +1,42 @@
+{
+  "name": "ckanext-content",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "ckeditor-bundle": "node esbuild.config.cjs"
+  },
+  "dependencies": {
+    "@ckeditor/ckeditor5-alignment": "^45.2.0",
+    "@ckeditor/ckeditor5-autosave": "^45.2.0",
+    "@ckeditor/ckeditor5-basic-styles": "^45.2.0",
+    "@ckeditor/ckeditor5-block-quote": "^45.2.0",
+    "@ckeditor/ckeditor5-code-block": "^45.2.0",
+    "@ckeditor/ckeditor5-editor-classic": "^45.2.0",
+    "@ckeditor/ckeditor5-font": "^45.2.0",
+    "@ckeditor/ckeditor5-fullscreen": "^45.2.0",
+    "@ckeditor/ckeditor5-heading": "^45.2.0",
+    "@ckeditor/ckeditor5-highlight": "^45.2.0",
+    "@ckeditor/ckeditor5-horizontal-line": "^45.2.0",
+    "@ckeditor/ckeditor5-html-embed": "^45.2.0",
+    "@ckeditor/ckeditor5-html-support": "^45.2.0",
+    "@ckeditor/ckeditor5-image": "^45.2.0",
+    "@ckeditor/ckeditor5-link": "^45.2.0",
+    "@ckeditor/ckeditor5-list": "^45.2.0",
+    "@ckeditor/ckeditor5-media-embed": "^45.2.0",
+    "@ckeditor/ckeditor5-paragraph": "^45.2.0",
+    "@ckeditor/ckeditor5-show-blocks": "^45.2.0",
+    "@ckeditor/ckeditor5-source-editing": "^45.2.0",
+    "@ckeditor/ckeditor5-table": "^45.2.0",
+    "@ckeditor/ckeditor5-ui": "^45.2.0",
+    "esbuild": "^0.19.0"
+  },
+  "devDependencies": {
+    "css-loader": "^7.1.2",
+    "postcss": "^8.5.6",
+    "postcss-loader": "^8.1.1",
+    "raw-loader": "^4.0.2",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.99.9",
+    "webpack-cli": "^6.0.1"
+  }
+}

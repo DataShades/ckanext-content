@@ -33,3 +33,7 @@ def edit_ckan_content(context: Context, data_dict: DataDict) -> AuthResult:
 
 def delete_ckan_content(context: Context, data_dict: DataDict) -> AuthResult:
     return {"success": False}
+
+
+def administer_ckan_content(context: Context, data_dict: DataDict) -> AuthResult:
+    return {"success": False}

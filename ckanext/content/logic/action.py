@@ -10,6 +10,7 @@ import ckan.model as model
 
 from ckanext.content import utils, types as content_types
 from ckanext.content.model.content import ContentModel
+from ckanext.content.model.content_revision import ContentRevisionModel
 
 
 ValidationError = logic.ValidationError
@@ -63,6 +64,10 @@ def update_ckan_content(context, data_dict):
     if errors:
         raise logic.ValidationError(errors)
 
+    if "__extras" in result:
+        result.pop("__extras")
+
+    print(result)
     title = result.pop("title")
     alias = result.pop("alias")
     state = result.pop("state")
@@ -80,7 +85,14 @@ def update_ckan_content(context, data_dict):
     if not ckan_content:
         raise logic.NotFound("No such Content.")
 
+    revision_data = dict(ckan_content.dictize({}))
+    revision_data["content_id"] = revision_data.pop("id")
+
+    ContentRevisionModel.create(revision_data)
+
     content = ckan_content.update(data)
+
+    ContentRevisionModel.limit_revisions_amount(id)
 
     return content
 
@@ -102,3 +114,12 @@ def ckan_content_list(
     tk.check_access("view_ckan_content_list", context, data_dict)
 
     return [snippet.dictize(context) for snippet in ContentModel.get_all()]
+
+
+@tk.side_effect_free
+def get_file_uploaded_url(context: types.Context, data_dict: types.DataDict):
+    filename = data_dict.get("filename", "")
+
+    path = "/uploads/content/" + filename
+
+    return tk.h.url_for(path, qualified=True)

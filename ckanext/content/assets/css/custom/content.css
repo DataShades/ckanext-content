@@ -1,4 +1,5 @@
-#content.content-page {
+#content.content-page,
+#content.content-search-page {
     .content-wrapper {
         background-color: var(--white-color);
         min-height: 300px;

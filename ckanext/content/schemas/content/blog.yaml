@@ -16,12 +16,41 @@ content_fields:
   validators: not_empty alias_unique is_relative_path unicode_safe
   required: true
   form_placeholder: eg. /my-blog
+  form_attrs:
+    data-module: ckan-content-autoslug
+    data-module-target: title
+    data-module-prefix: blog
+
+- field_name: banner
+  label: banner
+  form_snippet: file_upload.html
+  display_snippet: uploaded_image.html
+  validators: upload_file_to_storage
+  uploaded_file_text: Page Banner
 
 - field_name: notes
   label: Description
-  form_snippet: markdown.html
-  display_snippet: markdown.html
+  form_snippet: textarea.html
+  display_snippet: html.html
   form_placeholder: eg. Some useful notes about the data
+  form_attrs:
+    data-module: ckan-content-ckeditor
+
+
+- field_name: attached_document
+  label: Attached Document
+  form_snippet: file_upload.html
+  display_snippet: uploaded_file.html
+  validators: upload_file_to_storage
+  uploaded_file_text: Download Document
+
+- field_name: additional_text
+  label: Additional Text
+  form_snippet: textarea.html
+  display_snippet: html.html
+  form_placeholder: eg. Some useful notes about the data
+  form_attrs:
+    data-module: ckan-content-ckeditor
 
 - field_name: state
   label: State

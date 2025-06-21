@@ -10,3 +10,15 @@ class Content(TypedDict):
     created: str
     modified: str
     data: dict[str, Any]
+
+
+class ContentRevision(TypedDict):
+    id: str
+    content_id: str
+    title: str
+    alias: str
+    type: str
+    author: str
+    created: str
+    modified: str
+    data: dict[str, Any]

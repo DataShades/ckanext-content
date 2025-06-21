@@ -148,3 +148,7 @@ def guess_content_type_snippet(type):
         return path
     except TemplateNotFound:
         return default_path + "content.html"
+
+
+def uploaded_file_url(filename: str):
+    return tk.get_action("get_file_uploaded_url")({}, {"filename": filename})

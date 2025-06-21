@@ -1,0 +1,4 @@
+{% if data.get(field.field_name) %}
+    {% set url = h.uploaded_file_url(data[field.field_name]) %}
+    <img class="w-100" src="{{ url }}" alt="{% if field.uploaded_file_text %}{{ field.uploaded_file_text }}{% else %}{{ field.field_name }}{% endif %}">
+{% endif %}
