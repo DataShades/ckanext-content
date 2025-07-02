@@ -1,8 +1,5 @@
 label: Blog
 content_type: blog
-about: Content for custom pages in CKAN
-about_url: http://github.com/datashades/ckanext-content
-
 
 content_fields:
 
@@ -13,29 +10,28 @@ content_fields:
 
 - field_name: alias
   label: Alias
-  validators: not_empty alias_unique is_relative_path unicode_safe
+  validators: content_prepare_alias not_empty alias_unique is_relative_path
   required: true
+  form_snippet: alias.html
+  alias_prefix: /blog/
+  alias_source_field: title
+  alias_autogenerate: true
   form_placeholder: eg. /my-blog
-  form_attrs:
-    data-module: ckan-content-autoslug
-    data-module-target: title
-    data-module-prefix: blog
 
 - field_name: banner
   label: banner
   form_snippet: file_upload.html
   display_snippet: uploaded_image.html
   validators: upload_file_to_storage
-  uploaded_file_text: Page Banner
+  uploaded_file_text: Blog Banner
 
 - field_name: notes
   label: Description
-  form_snippet: textarea.html
+  form_snippet: content_textarea.html
   display_snippet: html.html
   form_placeholder: eg. Some useful notes about the data
   form_attrs:
     data-module: ckan-content-ckeditor
-
 
 - field_name: attached_document
   label: Attached Document
@@ -44,17 +40,9 @@ content_fields:
   validators: upload_file_to_storage
   uploaded_file_text: Download Document
 
-- field_name: additional_text
-  label: Additional Text
-  form_snippet: textarea.html
-  display_snippet: html.html
-  form_placeholder: eg. Some useful notes about the data
-  form_attrs:
-    data-module: ckan-content-ckeditor
-
 - field_name: state
   label: State
-  preset: select
+  preset: content_select
   choices:
     - value: 'draft'
       label: 'Draft'

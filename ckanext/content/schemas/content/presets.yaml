@@ -6,3 +6,9 @@ presets:
 - preset_name: content_text
   values:
     validators: ignore_missing unicode_safe
+
+- preset_name: content_select
+  values:
+    form_snippet: content_select.html
+    display_snippet: content_select.html
+    validators: content_required content_choices

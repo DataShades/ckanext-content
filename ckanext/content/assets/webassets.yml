@@ -31,7 +31,7 @@ content-admin-js:
 
     - js/ckan-content-list.js
     - js/ckan-content-ckeditor.js
-    - js/ckan-content-autoslug.js
+  #  - js/ckan-content-autoslug.js
   extra:
     preload:
       - base/main

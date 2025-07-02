@@ -7,21 +7,6 @@
                 <i class="fas fa-scroll" aria-hidden="true"></i>
             </a>
         </li>
-        <li class="dropdown blocksmith-dropdown">
-            <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" title="Content">
-                <i class="fas fa-feather-alt" aria-hidden="true"></i>
-            </a>
-            <ul class="dropdown-menu">
-                {% for content in h.get_schemas_types() %}
-                    <li>
-                        <a class="dropdown-item" href="{{ h.url_for('ckan_content.create', type=content.type) }}">
-                            <i class="fa fa-pencil" aria-hidden="true"></i>
-                            {{ _("Create") }} {{ content.label }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </li>
     {% endif %}
 
     {{ super() }}

@@ -24,6 +24,12 @@ Homepage = "https://github.com/Datashades/ckanext-content"
 [project.entry-points."ckan.plugins"]
 content = "ckanext.content.plugin:ContentPlugin"
 
+[project.optional-dependencies]
+docs = [
+    "mkdocs",
+    "mkdocs-material",
+    "mkdocstrings[python]"
+]
 
 [build-system]
 requires = ["setuptools"]

@@ -4,8 +4,10 @@ groups:
       options:
           - key: ckanext.content.schemas
             type: list
+            default: ckanext.content:schemas/content/page.yaml ckanext.content:schemas/content/blog.yaml
           - key: ckanext.content.presets
             type: list
+            default: ckanext.content:schemas/content/presets.yaml
           - key: ckanext.content.form_snippets_path
             type: list
             default: content/form_snippets/

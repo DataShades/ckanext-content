@@ -22,6 +22,9 @@ def create_ckan_content(context, data_dict):
     user = context["user"]
 
     prepared_schema = utils.prepare_schema_validation(schema, data)
+
+    context["schema"] = schema
+
     result, errors = dict_fns.validate(data, prepared_schema, context)
 
     if errors:
@@ -59,6 +62,8 @@ def update_ckan_content(context, data_dict):
 
     prepared_schema = utils.prepare_schema_validation(schema, data)
 
+    context["schema"] = schema
+
     result, errors = dict_fns.validate(data, prepared_schema, context)
 
     if errors:
@@ -67,7 +72,6 @@ def update_ckan_content(context, data_dict):
     if "__extras" in result:
         result.pop("__extras")
 
-    print(result)
     title = result.pop("title")
     alias = result.pop("alias")
     state = result.pop("state")
@@ -100,9 +104,14 @@ def update_ckan_content(context, data_dict):
 def delete_ckan_content(context: types.Context, data_dict: types.DataDict) -> bool:
     tk.check_access("delete_ckan_content", context, data_dict)
 
-    snippet = cast(ContentModel, ContentModel.get_by_id(data_dict["id"]))
+    content = cast(ContentModel, ContentModel.get_by_id(data_dict["id"]))
 
-    snippet.delete()
+    if content:
+        revisions = ContentRevisionModel.get_by_content_id(content.id)
+        for revision in revisions:
+            revision.delete()
+
+    content.delete()
 
     return True
 
@@ -113,7 +122,7 @@ def ckan_content_list(
 ) -> list[content_types.Content]:
     tk.check_access("view_ckan_content_list", context, data_dict)
 
-    return [snippet.dictize(context) for snippet in ContentModel.get_all()]
+    return [content.dictize(context) for content in ContentModel.get_all()]
 
 
 @tk.side_effect_free

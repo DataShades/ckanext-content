@@ -18,6 +18,33 @@
 
             <div class="content-wrapper">
                 {% block primary %}
+                    <div class="d-flex justify-content-end p-3">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#content-creation">
+                            {{ _("Create") }}
+                        </button>
+                        <div class="modal fade" id="content-creation" tabindex="-1" aria-labelledby="content-creation" aria-hidden="true">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title">Create</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <ul>
+                                        {% for content in h.get_schemas_types() %}
+                                            <li class="mb-2">
+                                                <a class="text-dark fw-bold fs-4" href="{{ h.url_for('ckan_content.create', type=content.type) }}">
+                                                    {{ content.label }}
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="ckan-content-content position-relative">
                         <div data-module="ckan-content-list" id="ckan-content-list">
                             <div class="ckan-content-loading-indicator text-center p-5">

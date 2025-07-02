@@ -1,122 +1,65 @@
-[![Tests](https://github.com/Datashades/ckanext-content/workflows/Tests/badge.svg?branch=main)](https://github.com/Datashades/ckanext-content/actions)
-
 # ckanext-content
 
-**TODO:** Put a description of your extension here:  What does it do? What features does it have? Consider including some screenshots or embedding a video!
+**ckanext-content** is a modern and flexible content management extension for CKAN. It replaces legacy extensions like `ckanext-pages` and `ckanext-showcase` with a schema-driven, configurable solution that supports custom content types, file uploads, templating, and URL aliasing.
+
+It is highly recommended to use it with [ckanext-scheming](https://github.com/ckan/ckanext-scheming) installed in order to increase the amount of templates, field types, validators and presets you can use to build your Content pages. Check the [Usage](https://datashades.github.io/ckanext-content/usage/#extending-the-number-field-options) section for instructions.
+
+![Main Content Screen](docs/assets/main.png)
+
+Check full [documentation](https://datashades.github.io/ckanext-content/) for more information on how to use this extension.
+
+## Main features
+
+* **Custom Content Types** - Define multiple content types (e.g. Pages, Reports, Banners) via YAML configuration.
+
+* **Schema-Based Configuration** - Specify fields, form controls, validation, and rendering behavior with a scheming-like syntax.
+
+* **Alias Support** -  Automatically generate or customize clean URLs for content entries. Configure a prefix (e.g. /blog/, /page/) and choose which field (e.g. title) becomes the alias slug.
+
+* **Custom Templates per Type** - Assign specific templates for reading and editing each content type.
+
+* **File Upload Support** - Attach files or images per content.
+
+* **Admin UI**: Manage all content and content types through the CKAN admin panel.
 
 
-## Requirements
+## Extra
 
-**TODO:** For example, you might want to mention here which versions of CKAN this
-extension works with.
+**Menus** - To be able to add the created content or add sidebars to them, use [ckanext-menu](https://github.com/DataShades/ckanext-menu) to create custom menus and manipulate them from the UI.
 
-If your extension works across different versions you can add the following table:
+**Files** - While ckanext-content has own files fields, you also instead can add consistent images, backgrounds, files and other resources that will be present on all content or specific content types by using [ckanext-media](https://github.com/DataShades/ckanext-media). This extension allows to create custom Media types or use Default types to upload and store different files from the UI and have them all in one place.
 
-Compatibility with core CKAN versions:
+## When to use?
 
-| CKAN version    | Compatible?   |
-| --------------- | ------------- |
-| 2.6 and earlier | not tested    |
-| 2.7             | not tested    |
-| 2.8             | not tested    |
-| 2.9             | not tested    |
-
-Suggested values:
-
-* "yes"
-* "not tested" - I can't think of a reason why it wouldn't work
-* "not yet" - there is an intention to get it working
-* "no"
+* When you need more content on CKAN rather then only Datasets, Groups and Organizations (e.g. Pages, News, Blog etc.).
+* When you don't want to add additional APP that will be responsible to for the content (e.g. Pages, News, Blog etc.) and integrate it with CKAN using APIs.
+* When you want to attach for example Showcases for Datasets, you can create custom fields that will gather those and display on Dataset page or Show some content tiles on Homepage.
 
 
 ## Installation
-
-**TODO:** Add any additional install steps to the list below.
-   For example installing any non-Python dependencies or adding any required
-   config settings.
-
-To install ckanext-content:
 
 1. Activate your CKAN virtual environment, for example:
 
      . /usr/lib/ckan/default/bin/activate
 
 2. Clone the source and install it on the virtualenv
-
-    git clone https://github.com/Datashades/ckanext-content.git
-    cd ckanext-content
-    pip install -e .
-	pip install -r requirements.txt
-
+```
+git clone https://github.com/Datashades/ckanext-content.git
+cd ckanext-content
+pip install -e .
+```
 3. Add `content` to the `ckan.plugins` setting in your CKAN
    config file (by default the config file is located at
    `/etc/ckan/default/ckan.ini`).
 
-4. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu:
+3. Initialize `content` table in the DB.
+```
+ckan -c CKAN_CONFIG_PATH db upgrade -p content
+```
 
-     sudo service apache2 reload
+4. Restart CKAN
 
-
-## Config settings
-
-None at present
-
-**TODO:** Document any optional config settings here. For example:
-
-	# The minimum number of hours to wait before re-checking a resource
-	# (optional, default: 24).
-	ckanext.content.some_setting = some_default_value
-
-
-## Developer installation
-
-To install ckanext-content for development, activate your CKAN virtualenv and
-do:
-
-    git clone https://github.com/Datashades/ckanext-content.git
-    cd ckanext-content
-    pip install -e .
-    pip install -r dev-requirements.txt
-
-
-## Tests
-
-To run the tests, do:
-
-    pytest --ckan-ini=test.ini
-
-
-## Releasing a new version of ckanext-content
-
-If ckanext-content should be available on PyPI you can follow these steps to publish a new version:
-
-1. Update the version number in the `pyproject.toml` file. See [PEP 440](http://legacy.python.org/dev/peps/pep-0440/#public-version-identifiers) for how to choose version numbers.
-
-2. Make sure you have the latest version of necessary packages:
-
-    pip install --upgrade setuptools wheel twine
-
-3. Create a source and binary distributions of the new version:
-
-       python -m build && twine check dist/*
-
-   Fix any errors you get.
-
-4. Upload the source distribution to PyPI:
-
-       twine upload dist/*
-
-5. Commit any outstanding changes:
-
-       git commit -a
-       git push
-
-6. Tag the new release of the project on GitHub with the version number from
-   the `setup.py` file. For example if the version number in `setup.py` is
-   0.0.1 then do:
-
-       git tag 0.0.1
-       git push --tags
+This will add default content types and presets. If you plan to register more types or extend templates, validation using ckanext-scheming, check the Usage section in the documentation.
 
 ## License
 

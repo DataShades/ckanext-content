@@ -1,9 +1,5 @@
 label: Page
 content_type: page
-about: Content for custom pages in CKAN
-about_url: http://github.com/datashades/ckanext-content
-
-
 content_fields:
 
 - field_name: title
@@ -13,17 +9,24 @@ content_fields:
 
 - field_name: alias
   label: Alias
-  validators: not_empty alias_unique is_relative_path unicode_safe
+  validators: content_prepare_alias not_empty alias_unique is_relative_path
   required: true
+  form_snippet: alias.html
+  alias_prefix: /page/
+  alias_source_field: title
+  alias_autogenerate: true
   form_placeholder: eg. /my-page
-  form_attrs:
-    data-module: ckan-content-autoslug
-    data-module-target: title
-    data-module-prefix: page
+
+- field_name: banner
+  label: banner
+  form_snippet: file_upload.html
+  display_snippet: uploaded_image.html
+  validators: upload_file_to_storage
+  uploaded_file_text: Page Banner
 
 - field_name: notes
   label: Body
-  form_snippet: textarea.html
+  form_snippet: content_textarea.html
   display_snippet: html.html
   form_placeholder: eg. Some useful notes about the data
   form_attrs:
@@ -31,7 +34,7 @@ content_fields:
 
 - field_name: state
   label: State
-  preset: select
+  preset: content_select
   choices:
     - value: 'draft'
       label: 'Draft'

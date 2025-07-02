@@ -152,3 +152,26 @@ def guess_content_type_snippet(type):
 
 def uploaded_file_url(filename: str):
     return tk.get_action("get_file_uploaded_url")({}, {"filename": filename})
+
+
+def content_field_required(field):
+    if "required" in field:
+        return field["required"]
+    return "not_empty" in field.get("validators", "").split()
+
+
+def content_field_choices(field):
+    if "choices" in field:
+        return field["choices"]
+    if "choices_helper" in field:
+        from ckantoolkit import h
+
+        choices_fn = getattr(h, field["choices_helper"])
+        return choices_fn(field)
+
+
+def content_choices_label(choices, value):
+    for c in choices:
+        if c["value"] == value:
+            return c.get("label", value)
+    return value
