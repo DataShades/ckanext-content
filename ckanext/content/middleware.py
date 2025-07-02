@@ -23,7 +23,12 @@ def render_content_if_exists(response: types.Response) -> types.Response:
 
     if content := ContentModel.get_by_alias(path):
         # delete to reinitialize webassets
-        delattr(tk.g, "_webassets")
+        if hasattr(tk.g, "_webassets"):
+            # for ckan 2.11
+            delattr(tk.g, "_webassets")
+        elif hasattr(tk.g, "webassets"):
+            # for ckan 2.10
+            delattr(tk.g, "webassets")
 
         try:
             tk.check_access("read_ckan_content", make_context(), {"id": content.id})
