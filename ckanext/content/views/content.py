@@ -241,6 +241,9 @@ class ReadRevisionView(MethodView):
         )
 
 
+content.add_url_rule("/content/list", view_func=ListView.as_view("list"))
+content.add_url_rule("/content/<type>/create", view_func=CreateView.as_view("create"))
+content.add_url_rule("/content/<type>/edit/<id>", view_func=EditView.as_view("edit"))
 content.add_url_rule("/content/<type>/<id>", view_func=ReadView.as_view("read"))
 content.add_url_rule(
     "/content/<type>/<id>/revisions",
@@ -250,6 +253,3 @@ content.add_url_rule(
     "/content/<type>/<content_id>/revisions/<id>",
     view_func=ReadRevisionView.as_view("read_revision"),
 )
-content.add_url_rule("/content/<type>/create", view_func=CreateView.as_view("create"))
-content.add_url_rule("/content/<type>/edit/<id>", view_func=EditView.as_view("edit"))
-content.add_url_rule("/content/list", view_func=ListView.as_view("list"))
