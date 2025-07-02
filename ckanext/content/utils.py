@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import ckan.plugins.toolkit as tk
 from ckan.config.declaration.option import _validators_from_string
 

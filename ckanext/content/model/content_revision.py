@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import sqlalchemy as sa
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.ext.mutable import MutableDict
