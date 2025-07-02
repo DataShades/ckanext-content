@@ -57,6 +57,11 @@ class CreateView(MethodView):
         except dict_fns.DataError:
             return tk.base.abort(400, tk._("Integrity Error"))
 
+        for f_name, file in tk.request.files.items():
+            correct_key = f_name.split("_content-")
+            if file.filename and len(correct_key) and correct_key[1] == "upload":
+                form_data[correct_key[0]] = file
+
         schema = tk.h.get_content_schema(type)
         data_dict = {
             "schema": schema,
