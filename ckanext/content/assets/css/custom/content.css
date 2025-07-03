@@ -4,5 +4,8 @@
         background-color: var(--white-color);
         min-height: 300px;
         position: relative;
+        img {
+            width: 100%;
+        }
     }
 }
