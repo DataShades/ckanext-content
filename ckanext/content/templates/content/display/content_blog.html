@@ -18,7 +18,8 @@
         
             <article class="content-wrapper">
                 {% block primary %}
-                    <div class="module-content">
+                    {# ck-content class needed so the CKEditor styles are applied. #}
+                    <div class="module-content ck-content">
                         {%- snippet 'content/snippets/read_actions.html', type=type, id=id %}
                         {%- set exclude_fields = [
                         'title',

@@ -11,6 +11,7 @@ content-css:
   filter: cssrewrite
   output: ckanext-content/%(version)s-content.css
   contents:
+    - css/vendor/ckeditor5.css
     - css/custom/variables.css
     - css/custom/content.css
   
@@ -41,7 +42,6 @@ content-admin-css:
   filter: cssrewrite
   output: ckanext-content/%(version)s-content-admin.css
   contents:
-    - css/vendor/ckeditor5.css
     - css/vendor/tabulator.min.css
     - css/vendor/tabulator-theme.min.css
 
