@@ -14,3 +14,6 @@ groups:
           - key: ckanext.content.display_snippets_path
             type: list
             default: content/display_snippets/
+          - key: ckan.upload.content.mimetypes
+            type: list
+            default: image/png image/gif image/jpeg text/csv application/pdf application/vnd.ms-excel application/vnd.openxmlformats-officedocument.spreadsheetml.sheet application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document application/zip application/json text/plain
