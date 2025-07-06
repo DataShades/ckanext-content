@@ -1,0 +1,26 @@
+<form action="">
+    <div class="input-group mb-3">
+        <input aria-label="{{ _('Search') }}" id="q" type="text" class="form-control input-lg" name="q" value="{{ q }}"
+            placeholder="{{ _('Search...') }}">
+        <span class="input-group-btn">
+            <button class="btn btn-default btn-lg" type="submit" value="search" aria-label="Submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </span>
+    </div>
+</form>
+
+<div class="d-flex justify-content-end mb-4">
+    <form action="">
+        <input type="hidden" name="q" value="{{ q }}">
+        <label for="type">
+            {{ _('Type') }}
+        </label>
+        <select name="type" id="type" onchange="this.form.submit()">
+            <option value="">{{ _('All') }}</option>
+            {% for i in types %}
+            <option value="{{ i.type }}" {% if i.type==type %}selected{% endif %}>{{ i.label }}</option>
+            {% endfor %}
+        </select>
+    </form>
+</div>

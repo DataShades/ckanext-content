@@ -1,39 +1,3 @@
-#ckan-content-list {
-    margin: 0;
-
-    .tabulator-footer {
-        border-top: unset;
-
-        .tabulator-footer-contents {
-            padding: 0;
-
-            .tabulator-paginator {
-                .tabulator-page {
-                    border-radius: 0.25rem;
-                    padding: 6px 12px;
-
-                    &.active,
-                    &:hover,
-                    &:focus,
-                    &:active {
-                        background-color: #206b82;
-                        border-color: #206b82;
-                        color: #fff;
-                    }
-                }
-            }
-        }
-    }
-
-    .tabulator-alert {
-        display: none;
-    }
-
-    .ckan-content-loading-indicator {
-        top: 4rem;
-    }
-}
-
 .ckan-content-search {
     display: flex;
     position: absolute;

@@ -27,10 +27,7 @@ content-admin-js:
   output: ckanext-content/%(version)s-content-admin.js
   contents:
     - js/vendor/ckeditor5-bundle.js
-    - js/vendor/sweetalert2.min.js
-    - js/vendor/tabulator.min.js
 
-    - js/ckan-content-list.js
     - js/ckan-content-ckeditor.js
   #  - js/ckan-content-autoslug.js
   extra:
@@ -42,9 +39,6 @@ content-admin-css:
   filter: cssrewrite
   output: ckanext-content/%(version)s-content-admin.css
   contents:
-    - css/vendor/tabulator.min.css
-    - css/vendor/tabulator-theme.min.css
-
     - css/admin.css
   extra:
     preload:
