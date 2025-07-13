@@ -175,3 +175,9 @@ def content_choices_label(choices, value):
         if c["value"] == value:
             return c.get("label", value)
     return value
+
+
+def content_field_by_name(fields, name):
+    for f in fields:
+        if f.get('field_name') == name:
+            return f

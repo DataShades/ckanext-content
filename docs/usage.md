@@ -179,7 +179,8 @@ You can avoid this and call your fields where needed, when needed individually:
 ```
 If you want to use the display snippet
 
-{%- snippet 'content/snippets/display_field.html', field=h.scheming_field_by_name(fields,'notes'), data=content.data, schema=schema -%}
+{% set fields = schema.content_fields %}
+{%- snippet 'content/snippets/display_field.html', field=h.content_field_by_name(fields,'notes'), data=content.data, schema=schema -%}
 
 If you want to manipulate with the data on your own
 <a class="btn btn-primary" href="{{ h.uploaded_file_url(content.data.attached_document) }}">
