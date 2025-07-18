@@ -8,7 +8,7 @@ Fill the fields and click `Create`.
 
 If you used [ckanext-scheming](https://github.com/ckan/ckanext-scheming) before, the process is quite similar to Dataset types schema register.
 
-Create and `yaml` schema file in your custom extension. For example `article.yaml`.
+Create and `yaml` schema file in your custom extension (or copy the existing schemas page.yaml/blog.yaml that can be found at ckanext-content as an starting point). For example `article.yaml`.
 
 In it specify its type and main fields. Here is an minimal schema config:
 
@@ -21,6 +21,7 @@ content_fields:
   label: Title
   validators: not_empty unicode_safe
   form_placeholder: eg. A descriptive title
+  translatable: true
 
 - field_name: alias
   label: Alias
@@ -39,6 +40,7 @@ content_fields:
   form_placeholder: eg. Some useful notes about the data
   form_attrs:
     data-module: ckan-content-ckeditor
+  translatable: true
 
 - field_name: state
   label: State
@@ -146,6 +148,40 @@ ckanext.content.display_snippets_path =
 ```
 
 Now you can use scheming validators, templates and presets.
+
+## Translations
+
+ckanext-content has an an ability to add and store translations for your content in-house.
+
+While visiting the Content Edit page, you can find **Translations** button, which leads to Translations list page from where you can add/update/delete Translations to your content.
+
+![Translation button](assets/translations_button.png)
+
+![Translations List](assets/translations_list.png)
+
+By default the "create" page can be empty, because no fields are makred as `translatable`.
+
+While adding your schema for Content type, you can specify which fields can be `translatable` by adding **translatable: true** attribute to the field. Look at schema example mentioned at **Register new Content types or re-define default** section, where Title and Notes are marked as `translatable`. You can attach this attribute to any fields and repeating fields as well.
+
+**Make sure to apply `translatable` only to fields that store text in DB.**
+
+
+### How it works
+
+There is an JSONB column called `translations` attached to `content` table. While adding new or editing existing translation, it stores it under the language short name as an key and the value are the fields that being filled in the form.
+
+Next while loading the page, the `Blueprint` that is responsible to rendering `Content`, has an logic in it to modify the original `content dict` with translated items (original version of content is still can be accessed using **original_content** variable in the template) if the language is different then the local that is set in `ini` file.
+
+Also there is an option to directly translate field outside of the `Content Blueprint` (e.g. tiles) by using helper:
+
+```
+{{ h.content_translation_field('title', content) }}
+
+OR to translate the whole content that is returned as per in the Blueprint
+This will modify the content variable with already translated items if language is changed.
+
+{% set content = content = h.content_prepare_translation(content) %}
+```
 
 ## Templating (layouts)
 
