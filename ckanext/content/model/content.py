@@ -26,6 +26,7 @@ class ContentModel(tk.BaseModel):
     state = sa.Column(sa.String, nullable=False)
     created = sa.Column(sa.DateTime, server_default=sa.func.now())
     modified = sa.Column(sa.DateTime, default=sa.func.now(), onupdate=sa.func.now())
+    translations = sa.Column(MutableDict.as_mutable(JSONB))
 
     @classmethod
     def get_by_id(cls, id: str) -> Self | None:
@@ -67,6 +68,18 @@ class ContentModel(tk.BaseModel):
             setattr(self, key, value)
         model.Session.commit()
 
+    def update_translation(self, lang: str, data: dict[str, Any]) -> None:
+        if not self.translations:
+            self.translations = MutableDict()
+
+        self.translations[lang] = data
+        model.Session.commit()
+
+    def delete_translation_key(self, lang: str):
+        if self.translations and lang in self.translations:
+            del self.translations[lang]
+            model.Session.commit()
+
     def dictize(self, context: types.Context) -> content_types.Content:
         return content_types.Content(
             id=str(self.id),
@@ -78,4 +91,5 @@ class ContentModel(tk.BaseModel):
             created=self.created.isoformat(),
             modified=self.modified.isoformat(),
             data=self.data,  # type: ignore
+            translations=self.translations,  # type: ignore
         )

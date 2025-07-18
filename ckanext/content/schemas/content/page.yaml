@@ -6,6 +6,7 @@ content_fields:
   label: Title
   validators: not_empty unicode_safe
   form_placeholder: eg. A descriptive title
+  translatable: true
 
 - field_name: alias
   label: Alias
@@ -31,6 +32,7 @@ content_fields:
   form_placeholder: eg. Some useful notes about the data
   form_attrs:
     data-module: ckan-content-ckeditor
+  translatable: true
 
 - field_name: state
   label: State

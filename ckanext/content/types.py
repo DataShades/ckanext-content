@@ -12,6 +12,7 @@ class Content(TypedDict):
     created: str
     modified: str
     data: dict[str, Any]
+    translations: dict[str, Any]
 
 
 class ContentRevision(TypedDict):

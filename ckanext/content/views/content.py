@@ -3,7 +3,7 @@ from __future__ import annotations
 from flask import Blueprint
 from flask.views import MethodView
 import sqlalchemy as sa
-
+from copy import deepcopy
 
 import ckan.lib.navl.dictization_functions as dict_fns
 import ckan.logic as logic
@@ -154,7 +154,7 @@ class EditView(MethodView):
                 extra_vars={"data": form_data, "schema": schema, "errors": {}},
             )
 
-        return tk.redirect_to("ckan_content.list", type=type, id=id)
+        return tk.redirect_to("ckan_content.list")
 
 
 class DeleteView(MethodView):
@@ -224,13 +224,24 @@ class ReadView(MethodView):
         schema = tk.h.get_content_schema(type)
 
         template = tk.h.guess_content_type_snippet(type)
+
+        original_content = content.dictize({})
+        default_locale = tk.config.get("ckan.locale_default", "en")
+        curr_lang = tk.h.lang()
+
+        if curr_lang != default_locale:
+            content = tk.h.content_prepare_translation(deepcopy(original_content))
+        else:
+            content = original_content
+
         return tk.render(
             template,
             extra_vars={
                 "schema": schema,
                 "type": type,
                 "id": id,
-                "content": content.dictize({}),
+                "content": content,
+                "original_content": original_content,
             },
         )
 

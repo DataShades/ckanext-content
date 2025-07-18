@@ -19,6 +19,7 @@ ValidationError = logic.ValidationError
 
 
 def create_ckan_content(context, data_dict):
+    tk.check_access("create_ckan_content", context, data_dict)
     schema = data_dict.get("schema")
     data = data_dict.get("form_data")
     user = context["user"]
@@ -55,7 +56,44 @@ def create_ckan_content(context, data_dict):
     return content
 
 
+def create_ckan_content_translation(context, data_dict):
+    tk.check_access("create_ckan_content", context, data_dict)
+    schema = data_dict.get("schema")
+    data = data_dict.get("form_data")
+    content_id = data_dict.get("content_id")
+    lang = data_dict.get("lang")
+
+    if not content_id:
+        raise logic.ValidationError({"content_id": ["Missing Content ID"]})
+    user = context["user"]
+
+    original_fields = schema["content_fields"]
+    for_translation_only = [
+        field for field in original_fields if field.get("translatable")
+    ]
+
+    schema["content_fields"] = for_translation_only
+
+    prepared_schema = utils.prepare_schema_validation(schema, data)
+
+    context["schema"] = schema
+
+    result, errors = dict_fns.validate(data, prepared_schema, context)
+
+    if errors:
+        raise logic.ValidationError(errors)
+
+    if lang:
+        content = ContentModel.get_by_id(content_id)
+
+        if content:
+            content.update_translation(lang, result)
+
+    return result
+
+
 def update_ckan_content(context, data_dict):
+    tk.check_access("edit_ckan_content", context, data_dict)
     schema = data_dict.get("schema")
     data = data_dict.get("form_data")
     id = data_dict.get("id")
@@ -94,6 +132,7 @@ def update_ckan_content(context, data_dict):
     revision_data = dict(ckan_content.dictize({}))
     revision_data["content_id"] = revision_data.pop("id")
 
+    revision_data.pop("translations")
     ContentRevisionModel.create(revision_data)
 
     content = ckan_content.update(data)
@@ -118,6 +157,21 @@ def delete_ckan_content(context: types.Context, data_dict: types.DataDict) -> bo
     return True
 
 
+def delete_ckan_content_translation(
+    context: types.Context, data_dict: types.DataDict
+) -> bool:
+    tk.check_access("delete_ckan_content", context, data_dict)
+
+    lang = data_dict["lang"]
+
+    content = cast(ContentModel, ContentModel.get_by_id(data_dict["id"]))
+
+    if content and content.translations:
+        content.delete_translation_key(lang)
+
+    return True
+
+
 @tk.side_effect_free
 def ckan_content_list(
     context: types.Context, data_dict: types.DataDict
@@ -134,3 +188,12 @@ def get_file_uploaded_url(context: types.Context, data_dict: types.DataDict):
     path = "/uploads/content/" + filename
 
     return tk.h.url_for(path, qualified=True)
+
+
+def get_content(context: types.Context, data_dict: types.DataDict):
+    id = data_dict.get("id")
+    if id:
+        content = cast(ContentModel, ContentModel.get_by_id(data_dict["id"]))
+        if content:
+            return content
+    return None

@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from flask import current_app
 from jinja2 import TemplateNotFound
-import logging
 import json
 import os
 import inspect
@@ -10,8 +9,10 @@ from typing import Any
 
 from ckan.lib.redis import connect_to_redis, Redis
 import ckan.plugins.toolkit as tk
+from ckan.common import _
 
 from ckanext.content import utils, loader, config
+from ckanext.content.types import Content
 
 
 def get_content_schemas():
@@ -179,5 +180,57 @@ def content_choices_label(choices, value):
 
 def content_field_by_name(fields, name):
     for f in fields:
-        if f.get('field_name') == name:
+        if f.get("field_name") == name:
             return f
+
+
+def content_translation_field(field, content: Content | dict[str, Any], default=None):
+    type = "obj"
+    text = ""
+    if isinstance(content, dict):
+        translations = content.get("translations")
+        type = "dict"
+    else:
+        translations = content.translations
+
+    if not translations:
+        text = getattr(field, content) if type == "obj" else content.get(field, "")
+    else:
+        lang = tk.h.lang()
+        if not lang in translations:
+            text = getattr(field, content) if type == "obj" else content.get(field, "")
+        else:
+            data = translations[lang]
+            if field in data and data[field]:
+                text = data[field]
+
+    if not text and default:
+        text = default
+    return text
+
+
+def content_prepare_translation(content):
+    translated = None
+    if content:
+        if not isinstance(content, dict):
+            try:
+                content = content.dictize({})
+            except TypeError:
+                return content
+
+        data = content.get("data", {})
+
+        if data:
+            translated = {
+                field: content_translation_field(field, content, value)
+                for field, value in data.items()
+            }
+
+        if translated:
+            content["data"] = translated
+
+        content["title"] = content_translation_field(
+            "title", content, default=content["title"]
+        )
+
+    return content

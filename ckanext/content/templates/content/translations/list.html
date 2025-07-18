@@ -1,0 +1,88 @@
+{% extends "content/page.html" %}
+
+{% block title %}
+    {{ _("Translations List") }}
+{% endblock %}
+
+{% block breadcrumb_content %}
+    {{ super() }}
+    <li><a href="{{ h.url_for('ckan_content_translations.list', type=content.type, content_id=content.id) }}">{{ _("Translations List") }}</a></li>
+{% endblock %}
+
+{%- block content %}
+    {% block maintag %}<div class="main content-main">{% endblock %}
+    <div id="content" class="content-page container">
+        {% block main_content %}
+            {% block flash %}{{ super() }}{% endblock %}
+            {% block toolbar %}{{ super() }}{% endblock %}
+
+            <div class="content-wrapper">
+                {% block primary %}
+                    <div class="module-content">
+                        <div class="d-flex justify-content-between mb-4">
+                            <a class="btn btn-outline-primary me-2" href="{{ h.url_for('ckan_content.edit', type=type, id=content_id) }}">
+                                {{ _("Back") }}
+                            </a>
+                            <form class="lang-select" action="{{ h.url_for('util.internal_redirect') }}" data-module="select-switch" method="POST">
+                                {{ h.csrf_input() }} 
+                                <label for="field-lang-select">{{ _('Create Translation For') }}</label>
+                                <select id="field-lang-select" name="url" data-module="autocomplete" data-module-dropdown-class="lang-dropdown" data-module-container-class="lang-container">
+                                {% for locale in h.get_available_locales() %}
+                                    <option value="{{ h.url_for('ckan_content_translations.create', type=content.type, content_id=content.id, lang=locale.short_name) }}" {% if locale.short_name == current_lang %}selected="selected"{% endif %}>
+                                    {{ locale.display_name or locale.english_name }}
+                                    </option>
+                                {% endfor %}
+                                </select>
+                                <button class="btn btn-default d-none " type="submit">{{ _('Go') }}</button>
+                            </form>
+                        </div>
+                        {% if content.translations %}
+                        <div class="row">
+                            {% for translation in content.translations %}
+                                <div class="col-md-6 mb-4">
+                                    <div class="card">
+                                        <div class="p-4 text-center">
+                                            <h2 class="h1">
+                                                {% if translation in locals %}
+                                                    {{ locals[translation].display_name or locals[translation].english_name }}
+                                                {% else %}
+                                                    {{ translation }}
+                                                {% endif %}
+                                            </h2>
+                                            <div class="">
+                                                <a class="btn btn-outline-primary btn-cell-edit me-2" href="{{ h.url_for('ckan_content_translations.edit', type=content.type, content_id=content.id, lang=translation) }}">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+                                                <a class="btn btn-outline-danger btn-delete" href="{{ h.url_for('ckan_content_translations.delete', type=content.type, content_id=content.id, lang=translation) }}">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                            <p>
+                                {{ _('No Translations yet being added.') }}
+                            </p>
+                        {% endif %}
+
+                    </div>
+                {% endblock %}
+            </div>
+        {% endblock %}
+        </div>
+    </div>
+{% endblock -%}
+
+{%- block scripts %}
+    {% asset 'content/content-admin-js' %}
+    {{ super() }}
+{% endblock -%}
+
+
+{%- block styles %}
+    {% asset 'content/content-admin-css' %}
+    {{ super() }}
+{% endblock %}

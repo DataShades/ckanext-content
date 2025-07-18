@@ -1,0 +1,18 @@
+<form action="" method="post" enctype="multipart/form-data">
+    {%- for field in schema.content_fields -%}
+        {% if field.translatable %}
+            {#% set field_snippet = field.form_snippet if field.form_snippet else 'content_text.html' %#}
+            {%- set field_snippet = field.form_snippet|default(
+            'repeating_subfields.html' if field.repeating_subfields else 'content_text.html') -%}
+            {%- snippet h.guess_snippet_from(field_snippet),
+                field=field,
+                data=data,
+                errors=errors
+            -%}
+        {% endif %}
+    {%- endfor -%}
+
+    <button type="submit" class="btn btn-primary">
+        {{ _('Create') if create else _('Update') }}
+    </button>
+</form>
