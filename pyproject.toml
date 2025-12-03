@@ -1,6 +1,6 @@
 [project]
 name = "ckanext-content"
-version = "0.0.1"
+version = "1.0.3"
 description = ""
 readme = "README.md"
 authors = [
