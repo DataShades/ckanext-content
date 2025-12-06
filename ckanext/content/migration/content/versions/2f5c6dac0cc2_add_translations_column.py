@@ -22,7 +22,9 @@ def upgrade():
     op.add_column(
         "content",
         sa.Column(
-            "translations", postgresql.JSONB(astext_type=sa.Text()), nullable=True
+            "translations",
+            postgresql.JSONB(astext_type=sa.Text()),
+            nullable=True,
         ),
     )
 

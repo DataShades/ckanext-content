@@ -27,10 +27,16 @@ def upgrade():
         sa.Column("type", sa.String(), nullable=False),
         sa.Column("data", postgresql.JSONB(astext_type=sa.Text()), nullable=True),
         sa.Column(
-            "created", sa.DateTime(), server_default=sa.func.now(), nullable=False
+            "created",
+            sa.DateTime(),
+            server_default=sa.func.now(),
+            nullable=False,
         ),
         sa.Column(
-            "modified", sa.DateTime(), server_default=sa.func.now(), nullable=False
+            "modified",
+            sa.DateTime(),
+            server_default=sa.func.now(),
+            nullable=False,
         ),
     )
 

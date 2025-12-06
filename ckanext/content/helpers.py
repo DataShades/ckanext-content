@@ -2,44 +2,42 @@ from __future__ import annotations
 
 from flask import current_app
 from jinja2 import TemplateNotFound
-import json
 import os
 import inspect
 from typing import Any
 
-from ckan.lib.redis import connect_to_redis, Redis
+import ckan.plugins as p
 import ckan.plugins.toolkit as tk
 from ckan.common import _
 
 from ckanext.content import utils, loader, config
 from ckanext.content.types import Content
+from ckanext.content.interfaces import IContent
 
 
 def get_content_schemas():
-    redis: Redis = connect_to_redis()
+    """
+    Get all content schemas from all plugins implementing IContent.
+    Schemas are cached at the plugin level, so files are read only once.
+    """
+    schemas = []
+    for plugin in p.PluginImplementations(IContent):
+        plugin_schemas = plugin.content_schemas()
+        if plugin_schemas:
+            schemas.extend(plugin_schemas)  # Use extend instead of assignment
 
-    keys = redis.keys(f"{utils.REDIS_CONTENT_SCHEMA_PREFIX}*")
-
-    if not keys:
-        keys = register_content_schemas()
-
-    schemas = [json.loads(redis.get(k)) for k in keys]
     return schemas
 
 
 def get_content_schema(name: str):
-    redis: Redis = connect_to_redis()
-    key = utils.get_content_redis_key(name)
-
-    schema = json.loads(redis.get(key))
-
-    full_schema = utils.full_schema(schema)
+    schemas = get_content_schemas()
+    schema = [schema for schema in schemas if schema["content_type"] == name]
+    full_schema = utils.full_schema(schema[0]) if schema else {}
     return full_schema
 
 
-def register_content_schemas() -> list[str] | None:
-    keys = []
-    redis: Redis = connect_to_redis()
+def register_content_schemas() -> list[dict[str, Any]]:
+    schemas_list = []
 
     schemas = config.content_get_content_schemas()
 
@@ -57,13 +55,9 @@ def register_content_schemas() -> list[str] | None:
         if os.path.exists(p):
             with open(p) as schema_file:
                 schema = loader.load(schema_file)
+                schemas_list.append(schema)
 
-                key = utils.get_content_redis_key(schema["content_type"])
-
-                redis.set(key, json.dumps(schema), ex=604800)
-                keys.append(key)
-
-    return keys
+    return schemas_list
 
 
 def get_schemas_types():
@@ -72,8 +66,7 @@ def get_schemas_types():
     return [{"label": s["label"], "type": s["content_type"]} for s in schemas]
 
 
-def register_content_presets() -> list[str] | None:
-    redis: Redis = connect_to_redis()
+def register_content_presets() -> list[dict[str, Any]]:
     presets = config.content_get_content_presets()
 
     gathered_presets = []
@@ -93,21 +86,20 @@ def register_content_presets() -> list[str] | None:
                 preset = loader.load(preset_file)
                 gathered_presets.extend(preset["presets"])
 
-    redis.set(utils.get_content_presets_key(), json.dumps(gathered_presets), ex=604800)
-
     return gathered_presets
 
 
 def get_content_presets():
-    redis: Redis = connect_to_redis()
+    """
+    Get all presets from all plugins implementing IContent.
+    Presets are cached at the plugin level, so files are read only once.
+    """
+    presets = []
+    for plugin in p.PluginImplementations(IContent):
+        plugin_presets = plugin.content_presets()
+        if plugin_presets:
+            presets.extend(plugin_presets)  # Use extend instead of assignment
 
-    key = utils.get_content_presets_key()
-    presets = redis.get(key)
-
-    if not presets:
-        presets = register_content_presets()
-    else:
-        presets = json.loads(presets)
     return presets
 
 
