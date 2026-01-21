@@ -27,7 +27,11 @@ def make_context() -> Context:
 class CreateTranslationView(MethodView):
     def get(self, type, content_id, lang):
         try:
-            tk.check_access("create_ckan_content", make_context(), {})
+            tk.check_access(
+                "create_ckan_content",
+                make_context(),
+                {"id": content_id, "type": type},
+            )
         except tk.NotAuthorized:
             return tk.abort(404, "Page not found")
 
@@ -56,11 +60,17 @@ class CreateTranslationView(MethodView):
             "lang": lang,
         }
 
-        return tk.render("content/translations/create.html", extra_vars=extra_vars)
+        return tk.render(
+            "content/translations/create.html", extra_vars=extra_vars
+        )
 
     def post(self, type, content_id, lang):
         try:
-            tk.check_access("create_ckan_content", make_context(), {})
+            tk.check_access(
+                "create_ckan_content",
+                make_context(),
+                {"id": content_id, "type": type},
+            )
         except tk.NotAuthorized:
             return tk.abort(404, "Page not found")
 
@@ -79,10 +89,13 @@ class CreateTranslationView(MethodView):
             "form_data": form_data,
             "content_id": content_id,
             "lang": lang,
+            "type": type,
         }
 
         try:
-            tk.get_action("create_ckan_content_translation")(make_context(), data_dict)
+            tk.get_action("create_ckan_content_translation")(
+                make_context(), data_dict
+            )
         except logic.ValidationError as e:
             tk.h.flash_error(e.error_summary)
             return tk.render(
@@ -100,7 +113,11 @@ class TranslationEditView(MethodView):
         content = ContentModel.get_by_id(content_id)
 
         try:
-            tk.check_access("edit_ckan_content", make_context(), {"id": id})
+            tk.check_access(
+                "edit_ckan_content",
+                make_context(),
+                {"id": content_id, "type": type},
+            )
         except tk.NotAuthorized:
             return tk.abort(404, "Page not found")
 
@@ -131,7 +148,11 @@ class TranslationEditView(MethodView):
 
     def post(self, type: str, content_id: str, lang: str):
         try:
-            tk.check_access("edit_ckan_content", make_context(), {})
+            tk.check_access(
+                "edit_ckan_content",
+                make_context(),
+                {"id": content_id, "type": type},
+            )
         except tk.NotAuthorized:
             return tk.abort(404, "Page not found")
 
@@ -146,7 +167,11 @@ class TranslationEditView(MethodView):
 
         for f_name, file in tk.request.files.items():
             correct_key = f_name.split("_content-")
-            if file.filename and len(correct_key) and correct_key[1] == "upload":
+            if (
+                file.filename
+                and len(correct_key)
+                and correct_key[1] == "upload"
+            ):
                 form_data[correct_key[0]] = file
 
         schema = tk.h.get_content_schema(type)
@@ -155,10 +180,13 @@ class TranslationEditView(MethodView):
             "form_data": form_data,
             "content_id": content_id,
             "lang": lang,
+            "type": type,
         }
 
         try:
-            tk.get_action("create_ckan_content_translation")(make_context(), data_dict)
+            tk.get_action("create_ckan_content_translation")(
+                make_context(), data_dict
+            )
         except tk.ValidationError as e:
             tk.h.flash_error(e.error_summary)
             return tk.render(
@@ -176,7 +204,11 @@ class TranslationDeleteView(MethodView):
         content = ContentModel.get_by_id(content_id)
 
         try:
-            tk.check_access("delete_ckan_content", make_context(), {"id": id})
+            tk.check_access(
+                "delete_ckan_content",
+                make_context(),
+                {"id": content_id, "type": type},
+            )
         except tk.NotAuthorized:
             return tk.abort(404, "Page not found")
 
@@ -195,23 +227,30 @@ class TranslationDeleteView(MethodView):
 
     def post(self, type: str, content_id: str, lang: str):
         try:
-            tk.check_access("delete_ckan_content", make_context(), {})
+            tk.check_access(
+                "delete_ckan_content",
+                make_context(),
+                {"id": content_id, "type": type},
+            )
         except tk.NotAuthorized:
             return tk.abort(404, "Page not found")
 
-        form_data = {"id": content_id, "lang": lang}
+        form_data = {"id": content_id, "lang": lang, "type": type}
 
         try:
-            tk.get_action("delete_ckan_content_translation")(make_context(), form_data)
+            tk.get_action("delete_ckan_content_translation")(
+                make_context(), form_data
+            )
         except logic.ValidationError as e:
             tk.h.flash_error(e.error_summary)
             return tk.render(
-                "content/delete.html",
+                "content/translations/delete.html",
                 extra_vars={
                     "type": type,
                     "content_id": content_id,
                     "lang": lang,
                     "errors": {},
+                    "form_data": form_data,
                 },
             )
 
@@ -227,7 +266,9 @@ class TranslationsView(MethodView):
         except tk.NotAuthorized:
             return tk.abort(404, "Page not found")
 
-        content = tk.get_action("get_content")(make_context(), {"id": content_id})
+        content = tk.get_action("get_content")(
+            make_context(), {"id": content_id}
+        )
 
         if not content:
             return tk.abort(404, "Page not found")
@@ -239,7 +280,9 @@ class TranslationsView(MethodView):
             "content_id": content_id,
         }
 
-        return tk.render("content/translations/list.html", extra_vars=extra_vars)
+        return tk.render(
+            "content/translations/list.html", extra_vars=extra_vars
+        )
 
 
 content_translations.add_url_rule(

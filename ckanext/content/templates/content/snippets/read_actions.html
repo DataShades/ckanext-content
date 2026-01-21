@@ -1,4 +1,4 @@
-{% if h.check_access('edit_ckan_content') %}
+{% if h.check_access('edit_ckan_content', {'id':id, 'type':type}) %}
     <div class="d-flex justify-content-end">
         <a class="btn btn-outline-primary me-2" href="{{ h.url_for('ckan_content.list') }}">
             {{ _("Back") }}

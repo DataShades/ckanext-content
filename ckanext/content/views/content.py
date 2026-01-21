@@ -31,7 +31,9 @@ def make_context() -> Context:
 class CreateView(MethodView):
     def get(self, type):
         try:
-            tk.check_access("create_ckan_content", make_context(), {})
+            tk.check_access(
+                "create_ckan_content", make_context(), {"type": type}
+            )
         except tk.NotAuthorized:
             return tk.abort(404, "Page not found")
 
@@ -47,7 +49,9 @@ class CreateView(MethodView):
 
     def post(self, type):
         try:
-            tk.check_access("create_ckan_content", make_context(), {})
+            tk.check_access(
+                "create_ckan_content", make_context(), {"type": type}
+            )
         except tk.NotAuthorized:
             return tk.abort(404, "Page not found")
 
@@ -62,13 +66,18 @@ class CreateView(MethodView):
 
         for f_name, file in tk.request.files.items():
             correct_key = f_name.split("_content-")
-            if file.filename and len(correct_key) and correct_key[1] == "upload":
+            if (
+                file.filename
+                and len(correct_key)
+                and correct_key[1] == "upload"
+            ):
                 form_data[correct_key[0]] = file
 
         schema = tk.h.get_content_schema(type)
         data_dict = {
             "schema": schema,
             "form_data": form_data,
+            "type": type,
         }
 
         try:
@@ -88,7 +97,9 @@ class EditView(MethodView):
         content = ContentModel.get_by_id(id)
 
         try:
-            tk.check_access("edit_ckan_content", make_context(), {"id": id})
+            tk.check_access(
+                "edit_ckan_content", make_context(), {"id": id, "type": type}
+            )
         except tk.NotAuthorized:
             return tk.abort(404, "Page not found")
 
@@ -120,7 +131,9 @@ class EditView(MethodView):
 
     def post(self, type: str, id: str):
         try:
-            tk.check_access("edit_ckan_content", make_context(), {})
+            tk.check_access(
+                "edit_ckan_content", make_context(), {"id": id, "type": type}
+            )
         except tk.NotAuthorized:
             return tk.abort(404, "Page not found")
 
@@ -135,7 +148,11 @@ class EditView(MethodView):
 
         for f_name, file in tk.request.files.items():
             correct_key = f_name.split("_content-")
-            if file.filename and len(correct_key) and correct_key[1] == "upload":
+            if (
+                file.filename
+                and len(correct_key)
+                and correct_key[1] == "upload"
+            ):
                 form_data[correct_key[0]] = file
 
         schema = tk.h.get_content_schema(type)
@@ -143,6 +160,7 @@ class EditView(MethodView):
             "schema": schema,
             "form_data": form_data,
             "id": id,
+            "type": type,
         }
 
         try:
@@ -162,7 +180,9 @@ class DeleteView(MethodView):
         content = ContentModel.get_by_id(id)
 
         try:
-            tk.check_access("delete_ckan_content", make_context(), {"id": id})
+            tk.check_access(
+                "delete_ckan_content", make_context(), {"id": id, "type": type}
+            )
         except tk.NotAuthorized:
             return tk.abort(404, "Page not found")
 
@@ -183,11 +203,13 @@ class DeleteView(MethodView):
 
     def post(self, type: str, id: str):
         try:
-            tk.check_access("delete_ckan_content", make_context(), {})
+            tk.check_access(
+                "delete_ckan_content", make_context(), {"id": id, "type": type}
+            )
         except tk.NotAuthorized:
             return tk.abort(404, "Page not found")
 
-        form_data = {"id": id}
+        form_data = {"id": id, "type": type}
 
         try:
             tk.get_action("delete_ckan_content")(make_context(), form_data)
@@ -209,7 +231,9 @@ class DeleteView(MethodView):
 class ReadView(MethodView):
     def _check_access(self, type: str, id: str):
         try:
-            tk.check_access("read_ckan_content", make_context(), {"id": id})
+            tk.check_access(
+                "read_ckan_content", make_context(), {"id": id, "type": type}
+            )
         except tk.NotAuthorized:
             return tk.abort(404, "Page not found")
 
@@ -230,7 +254,9 @@ class ReadView(MethodView):
         curr_lang = tk.h.lang()
 
         if curr_lang != default_locale:
-            content = tk.h.content_prepare_translation(deepcopy(original_content))
+            content = tk.h.content_prepare_translation(
+                deepcopy(original_content)
+            )
         else:
             content = original_content
 
@@ -310,7 +336,8 @@ class RevisionsListView(MethodView):
             return tk.abort(404, "Page not found")
 
         revisions = [
-            rev.dictize({}) for rev in ContentRevisionModel.get_by_content_id(id)
+            rev.dictize({})
+            for rev in ContentRevisionModel.get_by_content_id(id)
         ]
 
         return tk.render(
@@ -322,7 +349,9 @@ class RevisionsListView(MethodView):
 class ReadRevisionView(MethodView):
     def _check_access(self, type: str, content_id: str, id: str):
         try:
-            tk.check_access("read_ckan_content", make_context(), {"id": id})
+            tk.check_access(
+                "read_ckan_content", make_context(), {"id": id, "type": type}
+            )
         except tk.NotAuthorized:
             return tk.abort(404, "Page not found")
 
@@ -349,12 +378,18 @@ class ReadRevisionView(MethodView):
 
 
 content.add_url_rule("/content/list", view_func=ListView.as_view("list"))
-content.add_url_rule("/content/<type>/create", view_func=CreateView.as_view("create"))
-content.add_url_rule("/content/<type>/edit/<id>", view_func=EditView.as_view("edit"))
+content.add_url_rule(
+    "/content/<type>/create", view_func=CreateView.as_view("create")
+)
+content.add_url_rule(
+    "/content/<type>/edit/<id>", view_func=EditView.as_view("edit")
+)
 content.add_url_rule(
     "/content/<type>/delete/<id>", view_func=DeleteView.as_view("delete")
 )
-content.add_url_rule("/content/<type>/<id>", view_func=ReadView.as_view("read"))
+content.add_url_rule(
+    "/content/<type>/<id>", view_func=ReadView.as_view("read")
+)
 content.add_url_rule(
     "/content/<type>/<id>/revisions",
     view_func=RevisionsListView.as_view("content_revisions"),

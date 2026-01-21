@@ -60,7 +60,8 @@ ckan.module("ckan-content-list", function ($) {
             setTimeout(() => {
                 $("#ckan-content-grid").on("click", ".btn-delete", function () {
                     const contentId = $(this).data('id');
-                    self._onDelete(contentId);
+                    const contentType = $(this).data('type');
+                    self._onDelete(contentId, contentType);
                 });
             }, 100);
 
@@ -113,7 +114,7 @@ ckan.module("ckan-content-list", function ($) {
                     <a class="btn btn-outline-primary" href="${editUrl}">
                         <i class="fa fa-pencil"></i>
                     </a>
-                    <a class="btn btn-outline-danger btn-delete" data-id="${rowData.id}">
+                    <a class="btn btn-outline-danger btn-delete" data-id="${rowData.id}" data-type="${rowData.type}">
                         <i class="fa fa-trash"></i>
                     </a>
                 </div>
@@ -127,6 +128,7 @@ ckan.module("ckan-content-list", function ($) {
          */
         _oncontentDelete: function (e) {
             const contentId = $(e.currentTarget).data('id');
+            const contentType = $(e.currentTarget).data('type');
             const self = this;
 
             Swal.fire({
@@ -146,7 +148,7 @@ ckan.module("ckan-content-list", function ($) {
                 this.sandbox.client.call(
                     "POST",
                     "delete_ckan_content",
-                    { id: contentId },
+                    { id: contentId, type: contentType },
                     function (_) {
                         Swal.fire("The content has been deleted", "", "success");
                         self.table.replaceData(); // Reload

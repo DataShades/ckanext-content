@@ -25,7 +25,9 @@ class ContentModel(tk.BaseModel):
     author = sa.Column(sa.String, nullable=False)
     state = sa.Column(sa.String, nullable=False)
     created = sa.Column(sa.DateTime, server_default=sa.func.now())
-    modified = sa.Column(sa.DateTime, default=sa.func.now(), onupdate=sa.func.now())
+    modified = sa.Column(
+        sa.DateTime, default=sa.func.now(), onupdate=sa.func.now()
+    )
     translations = sa.Column(MutableDict.as_mutable(JSONB))
 
     @classmethod

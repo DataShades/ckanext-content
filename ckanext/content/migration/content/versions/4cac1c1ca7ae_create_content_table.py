@@ -25,7 +25,9 @@ def upgrade():
         sa.Column("title", sa.Text(), nullable=False),
         sa.Column("alias", sa.Text(), nullable=False),
         sa.Column("type", sa.String(), nullable=False),
-        sa.Column("data", postgresql.JSONB(astext_type=sa.Text()), nullable=True),
+        sa.Column(
+            "data", postgresql.JSONB(astext_type=sa.Text()), nullable=True
+        ),
         sa.Column(
             "created",
             sa.DateTime(),

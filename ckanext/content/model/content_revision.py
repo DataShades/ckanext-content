@@ -28,7 +28,9 @@ class ContentRevisionModel(tk.BaseModel):
     author = sa.Column(sa.String, nullable=False)
     state = sa.Column(sa.String, nullable=False)
     created = sa.Column(sa.DateTime, server_default=sa.func.now())
-    modified = sa.Column(sa.DateTime, default=sa.func.now(), onupdate=sa.func.now())
+    modified = sa.Column(
+        sa.DateTime, default=sa.func.now(), onupdate=sa.func.now()
+    )
 
     @classmethod
     def get_by_id(cls, id: str) -> Self | None:

@@ -25,7 +25,9 @@ def content_required(
     pure_key = key[0]
     fields = context["schema"]["content_fields"]
 
-    field_settings = [field for field in fields if field["field_name"] == pure_key][0]
+    field_settings = [
+        field for field in fields if field["field_name"] == pure_key
+    ][0]
 
     if field_settings.get("required"):
         return not_empty
@@ -43,7 +45,9 @@ def content_prepare_alias(
 
     fields = context["schema"]["content_fields"]
 
-    field_settings = [field for field in fields if field["field_name"] == pure_key][0]
+    field_settings = [
+        field for field in fields if field["field_name"] == pure_key
+    ][0]
     if field_settings and field_settings.get("alias_autogenerate"):
         target = field_settings.get("alias_source_field")
         if target:
@@ -67,7 +71,9 @@ def alias_unique(
         return
 
     if data.get(("__extras",)) and data.get(("__extras",)).get("id"):
-        current_content = ContentModel.get_by_id(data.get(("__extras",)).get("id"))
+        current_content = ContentModel.get_by_id(
+            data.get(("__extras",)).get("id")
+        )
         if current_content and data[key] == current_content.alias:
             return
 
@@ -88,7 +94,9 @@ def is_relative_path(
         # return
 
     if not value.startswith("/") or value.startswith("//"):
-        errors[key].append("Must start with a single slash (/) and not with //.")
+        errors[key].append(
+            "Must start with a single slash (/) and not with //."
+        )
         # return
 
     if not re.fullmatch(r"/[A-Za-z0-9][A-Za-z0-9_\-/]*", value):

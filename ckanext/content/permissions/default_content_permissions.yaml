@@ -1,0 +1,52 @@
+name: Content permissions
+description: Permissions for ckanext-content plugin
+permissions:
+  - key: administer_content
+    label: Administer content
+    description: User can administer content (full access)
+
+  - key: view_content_list
+    label: View content list
+    description: User can view the list of content items (admin page)
+
+  # Page content permissions
+  - key: page_read_content
+    label: Page Read published content
+    description: User can view published content
+
+  - key: page_read_unpublished_content
+    label: Page Read unpublished content
+    description: User can view unpublished content
+
+  - key: page_create_content
+    label: Page Create content
+    description: User can create new content items
+
+  - key: page_edit_content
+    label: Page Edit content
+    description: User can edit existing content items
+
+  - key: page_delete_content
+    label: Page Delete content
+    description: User can delete content items
+
+  # Blog content permissions
+  - key: blog_read_content
+    label: Blog Read published content
+    description: User can view individual content items
+
+  - key: blog_read_unpublished_content
+    label: Blog Read unpublished content
+    description: User can view unpublished content items
+
+  - key: blog_create_content
+    label: Blog Create content
+    description: User can create new content items
+
+  - key: blog_edit_content
+    label: Blog Edit content
+    description: User can edit existing content items
+
+  - key: blog_delete_content
+    label: Blog Delete content
+    description: User can delete content items

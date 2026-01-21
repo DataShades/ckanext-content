@@ -31,7 +31,11 @@ def render_content_if_exists(response: types.Response) -> types.Response:
             delattr(tk.g, "webassets")
 
         try:
-            tk.check_access("read_ckan_content", make_context(), {"id": content.id})
+            tk.check_access(
+                "read_ckan_content",
+                make_context(),
+                {"id": content.id, "type": content.type},
+            )
         except tk.NotAuthorized:
             return response
 
