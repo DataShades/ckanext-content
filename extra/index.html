@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.12">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.2afb09e1.min.css">
       
       
 
@@ -369,6 +369,39 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#permissions-and-access-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      Permissions and Access Control
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Permissions and Access Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -419,6 +452,39 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#permissions-and-access-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      Permissions and Access Control
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Permissions and Access Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -444,6 +510,33 @@
 <p><strong>ckanext-content</strong> itself, doesn't control or create menu items. In order to have managable Menus nagivation like Header, Footer or Sidebars on the Content pages, use <a href="https://github.com/DataShades/ckanext-menu">ckanext-menu</a>.</p>
 <h2 id="centralized-files-storage">Centralized files storage</h2>
 <p><strong>ckanext-content</strong> has own file upload fields, but files that should be present across all Content or on any Content pages of specific type like Banners, Backgrounds, Files with infromation, use <a href="https://github.com/DataShades/ckanext-media">ckanext-media</a> and add Media field for the Content where you can specify Media item Key that will be an reference to the actual Media File that can be updated independently from Content, but the changes will be reflected on Content pages.</p>
+<h2 id="permissions-and-access-control">Permissions and Access Control</h2>
+<p>By default, <strong>ckanext-content</strong> provides access control that grants full permissions to Sysadmins, while allowing anonymous users to view published content. For more granular access control, integrate with <a href="https://github.com/DataShades/ckanext-permissions">ckanext-permissions</a> to define custom roles and permissions, enabling you to delegate content moderation and management to specific users or groups.</p>
+<h3 id="installation">Installation</h3>
+<p>Follow the <a href="https://github.com/DataShades/ckanext-permissions#installation">ckanext-permissions installation guide</a> to install and set up the extension. This includes:</p>
+<ol>
+<li>Installing the extension</li>
+<li>Adding <code>permissions permissions_manager</code> to your plugins</li>
+<li>Running database migrations</li>
+<li>Initializing default roles</li>
+</ol>
+<h3 id="configuration">Configuration</h3>
+<p>After installing ckanext-permissions, add the content permissions group to your CKAN config file:</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="na">ckanext.permissions.permission_groups</span><span class="w"> </span><span class="o">=</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="na">ckanext.permissions</span><span class="o">:</span><span class="s">default_group.yaml</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="na">ckanext.content</span><span class="o">:</span><span class="s">permissions/default_content_permissions.yaml</span>
+</span></code></pre></div>
+<p>This registers the following permissions for content:</p>
+<ul>
+<li><code>view_content_list</code> - View the list of content items (admin page)</li>
+<li><code>read_content</code> - Read individual content items</li>
+<li><code>create_content</code> - Create new content items</li>
+<li><code>edit_content</code> - Edit existing content items</li>
+<li><code>delete_content</code> - Delete content items</li>
+<li><code>administer_content</code> - Full access to content administration</li>
+</ul>
+<p>After updating the config, restart CKAN for the changes to take effect.</p>
+<p>You can create your own permissions file from the Default, where you can add your custom content types to it in order to have permissions for them.</p>
 
 
 
@@ -492,10 +585,10 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      <script src="../assets/javascripts/bundle.c8b220af.min.js"></script>
       
     
   </body>
