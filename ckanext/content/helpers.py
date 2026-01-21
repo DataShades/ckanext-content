@@ -176,7 +176,9 @@ def content_field_by_name(fields, name):
             return f
 
 
-def content_translation_field(field, content: Content | dict[str, Any], default=None):
+def content_translation_field(
+    field, content: Content | dict[str, Any], default=None
+):
     type = "obj"
     text = ""
     if isinstance(content, dict):
@@ -186,11 +188,19 @@ def content_translation_field(field, content: Content | dict[str, Any], default=
         translations = content.translations
 
     if not translations:
-        text = getattr(field, content) if type == "obj" else content.get(field, "")
+        text = (
+            getattr(field, content)
+            if type == "obj"
+            else content.get(field, "")
+        )
     else:
         lang = tk.h.lang()
         if not lang in translations:
-            text = getattr(field, content) if type == "obj" else content.get(field, "")
+            text = (
+                getattr(field, content)
+                if type == "obj"
+                else content.get(field, "")
+            )
         else:
             data = translations[lang]
             if field in data and data[field]:

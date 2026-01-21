@@ -142,7 +142,9 @@ def update_ckan_content(context, data_dict):
     return content
 
 
-def delete_ckan_content(context: types.Context, data_dict: types.DataDict) -> bool:
+def delete_ckan_content(
+    context: types.Context, data_dict: types.DataDict
+) -> bool:
     tk.check_access("delete_ckan_content", context, data_dict)
 
     content = cast(ContentModel, ContentModel.get_by_id(data_dict["id"]))

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import ckan.plugins.toolkit as tk
+from ckan import model
 from ckan.config.declaration.option import _validators_from_string
 
 
@@ -45,7 +46,9 @@ def prepare_schema_validation(schema, data):
         return validators
 
     dataset_composite = {
-        f["field_name"] for f in schema["content_fields"] if "repeating_subfields" in f
+        f["field_name"]
+        for f in schema["content_fields"]
+        if "repeating_subfields" in f
     }
 
     if dataset_composite:
@@ -144,3 +147,42 @@ def flatten_repeating_fields(data):
         else:
             flat_data[key] = value
     return flat_data
+
+
+def check_content_permission(
+    permission: str,
+    user: str | None,
+    fallback: bool = False,
+) -> bool:
+    """Check if user has content permission through ckanext-permissions.
+
+    If ckanext-permissions is not enabled, returns the fallback value.
+
+    Args:
+        permission: The permission key to check (e.g., 'create_content')
+        user: The user to check permissions for
+        fallback: Value to return if ckanext-permissions is not enabled
+
+    Returns:
+        bool: True if user has the permission, False otherwise
+    """
+    try:
+        from ckanext.permissions import utils as perm_utils
+
+        if user:
+            user_obj = model.User.get(user)
+        else:
+            user_obj = model.AnonymousUser()
+
+        return perm_utils.check_permission(permission, user_obj)
+    except ImportError:
+        return fallback
+
+
+def is_permissions_enabled() -> bool:
+    """Check if ckanext-permissions is enabled in CKAN plugins.
+
+    Returns:
+        bool: True if ckanext-permissions is enabled, False otherwise
+    """
+    return "permissions" in tk.config.get("ckan.plugins", "")

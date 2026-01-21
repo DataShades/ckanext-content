@@ -29,6 +29,8 @@ Check full [documentation](https://datashades.github.io/ckanext-content/) for mo
 
 **Files** - While ckanext-content has own files fields, you also instead can add consistent images, backgrounds, files and other resources that will be present on all content or specific content types by using [ckanext-media](https://github.com/DataShades/ckanext-media). This extension allows to create custom Media types or use Default types to upload and store different files from the UI and have them all in one place.
 
+**Permissions** - By default, ckanext-content provides access control that grants full permissions to Sysadmins, while allowing anonymous users to view published content. For more granular access control, integrate with [ckanext-permissions](https://github.com/DataShades/ckanext-permissions) to define custom roles and permissions, enabling you to delegate content moderation and management to specific users or groups. See the [Permissions documentation](https://datashades.github.io/ckanext-content/extra/#permissions-and-access-control) for detailed setup instructions.
+
 ## When to use?
 
 * When you need more content on CKAN rather then only Datasets, Groups and Organizations (e.g. Pages, News, Blog etc.).

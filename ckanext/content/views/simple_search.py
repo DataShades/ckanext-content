@@ -67,4 +67,6 @@ def simple_search_1():
     )
     extra_vars["page"].items = content
 
-    return tk.render("content/examples/simple_search_1.html", extra_vars=extra_vars)
+    return tk.render(
+        "content/examples/simple_search_1.html", extra_vars=extra_vars
+    )
