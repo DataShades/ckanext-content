@@ -1,12 +1,10 @@
 ## Menus
 
-**ckanext-content** itself, doesn't control or create menu items. In order to have managable Menus nagivation like Header, Footer or Sidebars on the Content pages, use [ckanext-menu](https://github.com/DataShades/ckanext-menu).
-
+**ckanext-content** itself, doesn't control or create menu items. In order to have manageable Menus navigation like Header, Footer or Sidebars on the Content pages, use [ckanext-menu](https://github.com/DataShades/ckanext-menu).
 
 ## Centralized files storage
 
-**ckanext-content** has own file upload fields, but files that should be present across all Content or on any Content pages of specific type like Banners, Backgrounds, Files with infromation, use [ckanext-media](https://github.com/DataShades/ckanext-media) and add Media field for the Content where you can specify Media item Key that will be an reference to the actual Media File that can be updated independently from Content, but the changes will be reflected on Content pages.
-
+**ckanext-content** has own file upload fields, but files that should be present across all Content or on any Content pages of specific type like Banners, Backgrounds, Files with information, use [ckanext-media](https://github.com/DataShades/ckanext-media) and add Media field for the Content where you can specify Media item Key that will be a reference to the actual Media File that can be updated independently from Content, but the changes will be reflected on Content pages.
 
 ## Permissions and Access Control
 
@@ -14,12 +12,15 @@ By default, **ckanext-content** provides access control that grants full permiss
 
 ### Installation
 
-Follow the [ckanext-permissions installation guide](https://github.com/DataShades/ckanext-permissions#installation) to install and set up the extension. This includes:
+Follow the [ckanext-permissions installation guide](https://github.com/DataShades/ckanext-permissions) to install and set up the extension. This includes:
 
-1. Installing the extension
-2. Adding `permissions permissions_manager` to your plugins
-3. Running database migrations
-4. Initializing default roles
+Installing the extension.
+
+Adding `permissions permissions_manager` to your plugins.
+
+Running database migrations.
+
+Initializing default roles.
 
 ### Configuration
 
