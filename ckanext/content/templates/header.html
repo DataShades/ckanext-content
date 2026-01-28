@@ -1,7 +1,7 @@
 {% ckan_extends %}
 
 {% block header_account_logged %}
-    {% if g.userobj.sysadmin %}
+    {% if h.check_access('view_ckan_content_list') %}
         <li>
             <a class="" href="{{ h.url_for('ckan_content.list') }}">
                 <i class="fas fa-scroll" aria-hidden="true"></i>

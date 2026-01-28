@@ -55,8 +55,26 @@
                                         <th scope="col">Title</th>
                                         <th scope="col">Alias</th>
                                         <th scope="col">Type</th>
-                                        <th scope="col">State</th>
-                                        <th scope="col">Modified</th>
+                                        <th scope="col" style="cursor: pointer;">
+                                            <a href="{{ h.url_for('ckan_content.list', q=q, type=type, sort='state', order='asc' if sort == 'state' and order == 'desc' else 'desc') }}" class="text-decoration-none text-dark">
+                                                State
+                                                {% if sort == 'state' %}
+                                                    <i class="fa fa-sort-{{ 'asc' if order == 'asc' else 'desc' }}"></i>
+                                                {% else %}
+                                                    <i class="fa fa-sort"></i>
+                                                {% endif %}
+                                            </a>
+                                        </th>
+                                        <th scope="col" style="cursor: pointer;">
+                                            <a href="{{ h.url_for('ckan_content.list', q=q, type=type, sort='modified', order='asc' if sort == 'modified' and order == 'desc' else 'desc') }}" class="text-decoration-none text-dark">
+                                                Modified
+                                                {% if sort == 'modified' %}
+                                                    <i class="fa fa-sort-{{ 'asc' if order == 'asc' else 'desc' }}"></i>
+                                                {% else %}
+                                                    <i class="fa fa-sort"></i>
+                                                {% endif %}
+                                            </a>
+                                        </th>
                                         <th scope="col">Actions</th>
                                     </tr>
                                 </thead>
@@ -76,12 +94,16 @@
                                                 <a class="btn btn-outline-primary me-2" href="{{ h.url_for('ckan_content.read', type=item.type, id=item.id) }}">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
-                                                <a class="btn btn-outline-primary btn-cell-edit me-2" href="{{ h.url_for('ckan_content.edit', type=item.type, id=item.id) }}">
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
-                                                <a class="btn btn-outline-danger btn-delete" href="{{ h.url_for('ckan_content.delete', type=item.type, id=item.id) }}">
-                                                    <i class="fa fa-trash"></i>
-                                                </a>
+                                                {% if h.check_access('edit_ckan_content', {'type': item.type, 'id': item.id}) %}
+                                                    <a class="btn btn-outline-primary btn-cell-edit me-2" href="{{ h.url_for('ckan_content.edit', type=item.type, id=item.id) }}">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
+                                                {% endif %}
+                                                {% if h.check_access('delete_ckan_content', {'type': item.type, 'id': item.id}) %}
+                                                    <a class="btn btn-outline-danger btn-delete" href="{{ h.url_for('ckan_content.delete', type=item.type, id=item.id) }}">
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
+                                                {% endif %}
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -89,7 +111,7 @@
                             </table>
                         </div>
 
-                        {{ page.pager(q=q, type=type) }}
+                        {{ page.pager(q=q, type=type, sort=sort, order=order) }}
                     </div>
                 {% endblock %}
             </div>

@@ -283,6 +283,8 @@ class ListView(MethodView):
         extra_vars = {}
         extra_vars["q"] = q = tk.request.args.get("q", "")
         extra_vars["type"] = type = tk.request.args.get("type", "")
+        extra_vars["sort"] = sort = tk.request.args.get("sort", "modified")
+        extra_vars["order"] = order = tk.request.args.get("order", "desc")
         page = tk.h.get_page_number(tk.request.args)
         limit = 20
 
@@ -301,9 +303,14 @@ class ListView(MethodView):
 
         extra_vars["count"] = count = query.count()
 
+        sort_field = getattr(ContentModel, sort, ContentModel.modified)
+        if order == "asc":
+            query = query.order_by(sort_field.asc())
+        else:
+            query = query.order_by(sort_field.desc())
+
         query = (
-            query.order_by(ContentModel.modified.desc())
-            .offset((page - 1) * limit)
+            query.offset((page - 1) * limit)
             .limit(limit)
             .all()
         )
