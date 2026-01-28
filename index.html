@@ -50,7 +50,16 @@
     
     
     
-  </head>
+   <link href="assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="assets/javascripts/glightbox.min.js"></script></head>
   
   
     <body dir="ltr">
@@ -60,6 +69,11 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
+      
+        
+        <a href="#main-features" class="md-skip">
+          Skip to content
+        </a>
       
     </div>
     <div data-md-component="announce">
@@ -104,46 +118,6 @@
       <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
-    
-      
-      
-        <label class="md-header__button md-icon" for="__search">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-        </label>
-        <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
-      <label class="md-search__icon md-icon" for="__search">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
-      </label>
-      <nav class="md-search__options" aria-label="Search">
-        
-        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-        </button>
-      </nav>
-      
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="search-result">
-          <div class="md-search-result__meta">
-            Initializing search
-          </div>
-          <ol class="md-search-result__list" role="presentation"></ol>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-      
     
     
       <div class="md-header__source">
@@ -220,6 +194,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="." class="md-nav__link md-nav__link--active">
         
   
@@ -231,6 +218,50 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#main-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      Main features
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extra" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extra
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-to-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      When to use?
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -342,6 +373,41 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#main-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      Main features
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extra" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extra
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-to-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      When to use?
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -362,8 +428,23 @@
   <h1>Home</h1>
 
 <p><strong>ckanext-content</strong> is a modern and flexible content management extension for CKAN. It replaces legacy extensions like <code>ckanext-pages</code> and <code>ckanext-showcase</code> with a schema-driven, configurable solution that supports custom content types, translations, file uploads, templating, and URL aliasing.</p>
-<p>It is highly recommended to use it with <a href="https://github.com/ckan/ckanext-scheming">ckanext-scheming</a> installed in order to increase the amount of templates, field types, validators and presets you can use to build your Content pages. Check the <a href="https://datashades.github.io/ckanext-content/usage/#extending-the-number-field-options">Usage</a> section for instructions.</p>
-<p><img alt="Main Content Screen" src="assets/main.png" /></p>
+<p>It is highly recommended to use it with <a href="https://github.com/ckan/ckanext-scheming">ckanext-scheming</a> installed in order to increase the amount of templates, field types, validators and presets you can use to build your Content pages. Check the <a href="usage/#extending-the-number-field-options">Usage</a> section for instructions.</p>
+<p><a class="glightbox" href="assets/main.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Main Content Screen" src="assets/main.png" /></a></p>
+<h2 id="main-features">Main features</h2>
+<p><strong>Custom Content Types</strong> - Define multiple content types (e.g. Pages, Reports, Banners) via YAML configuration.</p>
+<p><strong>Schema-Based Configuration</strong> - Specify fields, form controls, validation, and rendering behavior with a scheming-like syntax.</p>
+<p><strong>Alias Support</strong> - Automatically generate or customize clean URLs for content entries. Configure a prefix (e.g. /blog/, /page/) and choose which field (e.g. title) becomes the alias slug.</p>
+<p><strong>Custom Templates per Type</strong> - Assign specific templates for reading and editing each content type.</p>
+<p><strong>File Upload Support</strong> - Attach files or images per content.</p>
+<p><strong>Admin UI</strong> - Manage all content and content types through the CKAN admin panel.</p>
+<h2 id="extra">Extra</h2>
+<p><strong>Menus</strong> - To be able to add the created content or add sidebars to them, use <a href="https://github.com/DataShades/ckanext-menu">ckanext-menu</a> to create custom menus and manipulate them from the UI.</p>
+<p><strong>Files</strong> - While ckanext-content has own files fields, you also instead can add consistent images, backgrounds, files and other resources that will be present on all content or specific content types by using <a href="https://github.com/DataShades/ckanext-media">ckanext-media</a>. This extension allows to create custom Media types or use Default types to upload and store different files from the UI and have them all in one place.</p>
+<p><strong>Permissions</strong> - By default, ckanext-content provides access control that grants full permissions to Sysadmins, while allowing anonymous users to view published content. For more granular access control, integrate with <a href="https://github.com/DataShades/ckanext-permissions">ckanext-permissions</a> to define custom roles and permissions, enabling you to delegate content moderation and management to specific users or groups. See the <a href="extra/#permissions-and-access-control">Permissions documentation</a> for detailed setup instructions.</p>
+<h2 id="when-to-use">When to use?</h2>
+<p>When you need more content on CKAN rather then only Datasets, Groups and Organizations (e.g. Pages, News, Blog etc.).</p>
+<p>When you don't want to add additional APP that will be responsible to for the content (e.g. Pages, News, Blog etc.) and integrate it with CKAN using APIs.</p>
+<p>When you want to attach for example Showcases for Datasets, you can create custom fields that will gather those and display on Dataset page or Show some content tiles on Homepage.</p>
 
 
 
@@ -418,5 +499,7 @@
       <script src="assets/javascripts/bundle.c8b220af.min.js"></script>
       
     
-  </body>
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
 </html>

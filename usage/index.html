@@ -52,7 +52,16 @@
     
     
     
-  </head>
+   <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../assets/javascripts/glightbox.min.js"></script></head>
   
   
     <body dir="ltr">
@@ -111,46 +120,6 @@
       <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
-    
-      
-      
-        <label class="md-header__button md-icon" for="__search">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-        </label>
-        <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
-      <label class="md-search__icon md-icon" for="__search">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
-      </label>
-      <nav class="md-search__options" aria-label="Search">
-        
-        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-        </button>
-      </nav>
-      
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="search-result">
-          <div class="md-search-result__meta">
-            Initializing search
-          </div>
-          <ol class="md-search-result__list" role="presentation"></ol>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-      
     
     
       <div class="md-header__source">
@@ -659,110 +628,84 @@
   <h1>Usage</h1>
 
 <h2 id="add-content">Add Content</h2>
-<p>Go to <code>/content/list</code> on your portal, click <code>Create</code> and choose Content type you want to Add.</p>
+<p>Navigate to <code>/content/list</code> on your portal, click <code>Create</code> and choose Content type you want to add.</p>
 <p>Fill the fields and click <code>Create</code>.</p>
 <h2 id="register-new-content-types-or-re-define-default">Register new Content types or re-define default</h2>
 <p>If you used <a href="https://github.com/ckan/ckanext-scheming">ckanext-scheming</a> before, the process is quite similar to Dataset types schema register.</p>
-<p>Create and <code>yaml</code> schema file in your custom extension (or copy the existing schemas page.yaml/blog.yaml that can be found at ckanext-content as an starting point). For example <code>article.yaml</code>.</p>
-<p>In it specify its type and main fields. Here is an minimal schema config:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>label: Article
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>content_type: article
+<p>Create a <code>yaml</code> schema file in your custom extension (or copy the existing schemas page.yaml/blog.yaml that can be found at ckanext-content as a starting point). For example <code>article.yaml</code>.</p>
+<p>In it specify its type and main fields. Here is a minimal schema config:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Article</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">article</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>content_fields:
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>- field_name: title
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  label: Title
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  validators: not_empty unicode_safe
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>  form_placeholder: eg. A descriptive title
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>  translatable: true
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nt">content_fields</span><span class="p">:</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">field_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">title</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Title</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="nt">validators</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">not_empty unicode_safe</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="nt">form_placeholder</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">eg. A descriptive title</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span><span class="nt">translatable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>- field_name: alias
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>  label: Alias
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>  validators: content_prepare_alias not_empty alias_unique is_relative_path
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>  required: true
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>  form_snippet: alias.html
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>  alias_prefix: /article/
-</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>  alias_source_field: title
-</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>  alias_autogenerate: true
-</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>  form_placeholder: eg. /my-article
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">field_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">alias</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">  </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Alias</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">  </span><span class="nt">validators</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">content_prepare_alias not_empty alias_unique is_relative_path</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">  </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">  </span><span class="nt">form_snippet</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">alias.html</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">  </span><span class="nt">alias_prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/article/</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">  </span><span class="nt">alias_source_field</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">title</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">  </span><span class="nt">alias_autogenerate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">  </span><span class="nt">form_placeholder</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">eg. /my-article</span>
 </span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
-</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>- field_name: notes
-</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>  label: Body
-</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>  form_snippet: content_textarea.html
-</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>  display_snippet: html.html
-</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>  form_placeholder: eg. Some useful notes about the data
-</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>  form_attrs:
-</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    data-module: ckan-content-ckeditor
-</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>  translatable: true
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">field_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">notes</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">  </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Body</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">  </span><span class="nt">form_snippet</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">content_textarea.html</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">  </span><span class="nt">display_snippet</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">html.html</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">  </span><span class="nt">form_placeholder</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">eg. Some useful notes about the data</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">  </span><span class="nt">form_attrs</span><span class="p">:</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">    </span><span class="nt">data-module</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ckan-content-ckeditor</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">  </span><span class="nt">translatable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>
-</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>- field_name: state
-</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>  label: State
-</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>  preset: content_select
-</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>  choices:
-</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>    - value: &#39;draft&#39;
-</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>      label: &#39;Draft&#39;
-</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>    - value: &#39;active&#39;
-</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>      label: &#39;Published&#39;
-</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>  required: true
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">field_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">state</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="w">  </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">State</span>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="w">  </span><span class="nt">preset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">content_select</span>
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="w">  </span><span class="nt">choices</span><span class="p">:</span>
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;draft&#39;</span>
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="w">      </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;Draft&#39;</span>
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;active&#39;</span>
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a><span class="w">      </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;Published&#39;</span>
+</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a><span class="w">  </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </span></code></pre></div>
-<p>Here is an defition of each item in the schema:</p>
-<ul>
-<li><strong>label</strong> - Represents the human readable version of the content type.</li>
-<li><strong>content_type</strong> - Type that is going to be stored in the DB for this specific Content type.</li>
-<li><strong>content_fields</strong> - Fields that this Content type will help.</li>
-</ul>
+<p>Here is a definition of each item in the schema:</p>
+<p><strong>label</strong> - Represents the human readable version of the content type.</p>
+<p><strong>content_type</strong> - Type that is going to be stored in the DB for this specific Content type.</p>
+<p><strong>content_fields</strong> - Fields that this Content type will have.</p>
 <p>While <code>notes</code> is an optional field, all other fields are <strong>required</strong> to be present to make the schema work as expected.</p>
-<p><strong>Required fields:</strong></p>
-<ul>
-<li><strong>title</strong> - Text field that represent the heading of the future Content.</li>
-<li><strong>alias</strong> - Text field that used to generate an proper URL depending of <code>title</code>.</li>
-<li><strong>state</strong> - Select where you specify whether the Content is publicly accessible or not.</li>
-</ul>
-<p>You can modify those fields, add more fields. This will be descibed below in separate section.</p>
-<p>Attach you newly create schema using <code>ckanext.content.schemas</code> CKAN config. By default it has 2 default types, but you can remove them is not needed or re-define using this config.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ckanext.content.schemas = 
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>                ckanext.content:schemas/content/page.yaml # Default schema
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>                ckanext.content:schemas/content/blog.yaml # Default schema
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>                ckanext.MY_EXTENSION:PATH_TO_THE_NEW_YAM_FILE/article.yaml
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>                # Re-define default schema
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>                # Copy the original schema into it and modify as you wish
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>                #ckanext.MY_EXTENSION:PATH_TO_THE_NEW_YAM_FILE/page.yaml
+<p>Required fields:</p>
+<p><strong>title</strong> - Text field that represent the heading of the future Content.</p>
+<p><strong>alias</strong> - Text field that used to generate a proper URL depending of <code>title</code>.</p>
+<p><strong>state</strong> - Select where you specify whether the Content is publicly accessible or not.</p>
+<p>You can modify those fields, add more fields. This will be described below in separate section.</p>
+<p>Attach your newly created schema using <code>ckanext.content.schemas</code> CKAN config. By default it has 2 default types, but you can remove them if not needed or re-define using this config.</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="na">ckanext.content.schemas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="na">ckanext.content</span><span class="o">:</span><span class="s">schemas/content/page.yaml</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="na">ckanext.content</span><span class="o">:</span><span class="s">schemas/content/blog.yaml</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="na">ckanext.MY_EXTENSION</span><span class="o">:</span><span class="s">PATH_TO_THE_NEW_YAM_FILE/article.yaml</span>
 </span></code></pre></div>
 <p>Restart CKAN and you should be able to see the new Content type in the Create options.</p>
 <h2 id="fields">Fields</h2>
-<p>There only two required fields to be setup in order to see your field:</p>
-<ul>
-<li>
-<p><strong>field_name</strong> - specifies the field machine name that will be stored in the DB as an key to the field value.</p>
-</li>
-<li>
+<p>There are only two required fields to be setup in order to see your field:</p>
+<p><strong>field_name</strong> - specifies the field machine name that will be stored in the DB as a key to the field value.</p>
 <p><strong>label</strong> - Ends up being the "label" for the field.</p>
-</li>
-</ul>
 <p>All other keys are optional and depending on what kind of field you want to see, what validation it should have, representation on form or the display output.</p>
 <h3 id="aliases">Aliases</h3>
 <p>Aliases field is using additional field keys and validators specifically designed for ckanext-content.</p>
-<ul>
-<li><strong>alias_autogenerate</strong> - specifies if alias field will try to generate the Alias by himself using <strong>alias_source_field</strong> key as an reference to source field. You can set it to "False" or remove, so you will be able to setup aliases manually.</li>
-<li><strong>alias_source_field</strong> - specifies an field, where it will try to pull value and try to turn it into proper URL prepared value.</li>
-<li><strong>alias_prefix</strong> - prefix that will be attached to the generated Alias.</li>
-</ul>
+<p><strong>alias_autogenerate</strong> - specifies if alias field will try to generate the Alias by himself using <strong>alias_source_field</strong> key as a reference to source field. You can set it to "False" or remove, so you will be able to setup aliases manually.</p>
+<p><strong>alias_source_field</strong> - specifies a field, where it will try to pull value and try to turn it into proper URL prepared value.</p>
+<p><strong>alias_prefix</strong> - prefix that will be attached to the generated Alias.</p>
 <p>Validators:</p>
-<ul>
-<li><strong>content_prepare_alias</strong> - is used only with alias_autogenerate enabled, otherwise skips the creation process.</li>
-</ul>
+<p><strong>content_prepare_alias</strong> - is used only with alias_autogenerate enabled, otherwise skips the creation process.</p>
 <h3 id="commonly-used">Commonly used</h3>
-<ul>
-<li>
-<p><strong>validators</strong> - key where you spcify how the field will be validated while create/update process. Usually validators are registered in <code>validatiors.py</code> or <code>validation.py</code> files.</p>
-</li>
-<li>
-<p><strong>form_snippet</strong> - an template that is used to disaply your field in an specific manner on the form, for example if its going to be just and <code>input</code> or and <code>textarea</code>. Those are usually stored under <code>form_snippet</code> folder, but you can provide additional path.</p>
-</li>
-<li>
-<p><strong>display_snippet</strong> - an template that is used to ouput the field value if different ways on your pages, its optional, so if you want to grab your data value straight in the template and disaply is as you want.</p>
-</li>
-</ul>
+<p><strong>validators</strong> - key where you specify how the field will be validated while create/update process. Usually validators are registered in <code>validators.py</code> or <code>validation.py</code> files.</p>
+<p><strong>form_snippet</strong> - a template that is used to display your field in a specific manner on the form, for example if its going to be just an <code>input</code> or an <code>textarea</code>. Those are usually stored under <code>form_snippet</code> folder, but you can provide additional path.</p>
+<p><strong>display_snippet</strong> - a template that is used to output the field value in different ways on your pages, its optional, so if you want to grab your data value straight in the template and display it as you want.</p>
 <p>Out of the box, ckanext-content offers just a few fields types that you can use:</p>
 <ul>
 <li>text</li>
@@ -771,91 +714,82 @@
 <li>file_upload (uploading images and files)</li>
 </ul>
 <h3 id="extending-the-number-field-options">Extending the number field options</h3>
-<p><strong>It is highly recommend to add ckanext-scheming</strong>, add it to plugins list and register additional path for form_snippet, display_snippet and presets in order to have an access to even bigger amount of different field types that you can create and validators. Check <a href="https://github.com/ckan/ckanext-scheming">ckanext-scheming</a> for examples.</p>
+<p>It is highly recommend to add ckanext-scheming, add it to plugins list and register additional path for form_snippet, display_snippet and presets in order to have access to even bigger amount of different field types that you can create and validators. Check <a href="https://github.com/ckan/ckanext-scheming">ckanext-scheming</a> for examples.</p>
 <p>How to do it?</p>
-<ul>
-<li>Install ckanext-scheming</li>
-<li>Add <code>scheming_datasets</code> to the plguins list</li>
-<li>Using <code>ckanext.content.presets</code> add the scheming default presets list to this config alongside with ckanext-content
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ckanext.content.presets =
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>                ckanext.content:schemas/content/presets.yaml
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>                ckanext.scheming:presets.json
-</span></code></pre></div></li>
-<li>Register additional path for <code>form_snippet</code> and <code>display_snippet</code>, to check in scheming extension as well.
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ckanext.content.form_snippets_path =
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>     content/form_snippets/
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>     scheming/form_snippets/
+<p>Install ckanext-scheming.</p>
+<p>Add <code>scheming_datasets</code> to the plugins list.</p>
+<p>Using <code>ckanext.content.presets</code> add the scheming default presets list to this config alongside with ckanext-content:</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="na">ckanext.content.presets</span><span class="w"> </span><span class="o">=</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="na">ckanext.content</span><span class="o">:</span><span class="s">schemas/content/presets.yaml</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="na">ckanext.scheming</span><span class="o">:</span><span class="s">presets.json</span>
+</span></code></pre></div>
+<p>Register additional path for <code>form_snippet</code> and <code>display_snippet</code>, to check in scheming extension as well:</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="na">ckanext.content.form_snippets_path</span><span class="w"> </span><span class="o">=</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="na">content/form_snippets/</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="na">scheming/form_snippets/</span>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>ckanext.content.display_snippets_path =
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>     content/display_snippets/
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>     scheming/display_snippets/
-</span></code></pre></div></li>
-</ul>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="na">ckanext.content.display_snippets_path</span><span class="w"> </span><span class="o">=</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="na">content/display_snippets/</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="na">scheming/display_snippets/</span>
+</span></code></pre></div>
 <p>Now you can use scheming validators, templates and presets.</p>
 <h2 id="translations">Translations</h2>
-<p>ckanext-content has an an ability to add and store translations for your content in-house.</p>
+<p>ckanext-content has an ability to add and store translations for your content in-house.</p>
 <p>While visiting the Content Edit page, you can find <strong>Translations</strong> button, which leads to Translations list page from where you can add/update/delete Translations to your content.</p>
-<p><img alt="Translation button" src="../assets/translations_button.png" /></p>
-<p><img alt="Translations List" src="../assets/translations_list.png" /></p>
-<p>By default the "create" page can be empty, because no fields are makred as <code>translatable</code>.</p>
+<p><a class="glightbox" href="../assets/translations_button.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Translation button" src="../assets/translations_button.png" /></a></p>
+<p><a class="glightbox" href="../assets/translations_list.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Translations List" src="../assets/translations_list.png" /></a></p>
+<p>By default the "create" page can be empty, because no fields are marked as <code>translatable</code>.</p>
 <p>While adding your schema for Content type, you can specify which fields can be <code>translatable</code> by adding <strong>translatable: true</strong> attribute to the field. Look at schema example mentioned at <strong>Register new Content types or re-define default</strong> section, where Title and Notes are marked as <code>translatable</code>. You can attach this attribute to any fields and repeating fields as well.</p>
-<p><strong>Make sure to apply <code>translatable</code> only to fields that store text in DB.</strong></p>
+<p>Make sure to apply <code>translatable</code> only to fields that store text in DB.</p>
 <h3 id="how-it-works">How it works</h3>
-<p>There is an JSONB column called <code>translations</code> attached to <code>content</code> table. While adding new or editing existing translation, it stores it under the language short name as an key and the value are the fields that being filled in the form.</p>
-<p>Next while loading the page, the <code>Blueprint</code> that is responsible to rendering <code>Content</code>, has an logic in it to modify the original <code>content dict</code> with translated items (original version of content is still can be accessed using <strong>original_content</strong> variable in the template) if the language is different then the local that is set in <code>ini</code> file.</p>
+<p>There is a JSONB column called <code>translations</code> attached to <code>content</code> table. While adding new or editing existing translation, it stores it under the language short name as a key and the value are the fields that being filled in the form.</p>
+<p>Next while loading the page, the <code>Blueprint</code> that is responsible to rendering <code>Content</code>, has a logic in it to modify the original <code>content dict</code> with translated items (original version of content is still can be accessed using <strong>original_content</strong> variable in the template) if the language is different then the locale that is set in <code>ini</code> file.</p>
 <p>Also there is an option to directly translate field outside of the <code>Content Blueprint</code> (e.g. tiles) by using helper:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>{{ h.content_translation_field(&#39;title&#39;, content) }}
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>OR to translate the whole content that is returned as per in the Blueprint
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>This will modify the content variable with already translated items if language is changed.
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>{% set content = content = h.content_prepare_translation(content) %}
+<div class="language-jinja highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="cp">{{</span> <span class="nv">h.content_translation_field</span><span class="o">(</span><span class="s1">&#39;title&#39;</span><span class="o">,</span> <span class="nv">content</span><span class="o">)</span> <span class="cp">}}</span>
+</span></code></pre></div>
+<p>To translate the whole content that is returned as per in the Blueprint, this will modify the content variable with already translated items if language is changed:</p>
+<div class="language-jinja highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="cp">{%</span> <span class="k">set</span> <span class="nv">content</span> <span class="o">=</span> <span class="nv">h.content_prepare_translation</span><span class="o">(</span><span class="nv">content</span><span class="o">)</span> <span class="cp">%}</span>
 </span></code></pre></div>
 <h2 id="templating-layouts">Templating (layouts)</h2>
-<p>Each Content type is using the default Jinja template to disaply the data, but you can register an alternative one per your custom content type.</p>
+<p>Each Content type is using the default Jinja template to display the data, but you can register an alternative one per your custom content type.</p>
 <p>As an example, Blog and Page default types. While Page is using default template <code>content.html</code>, Blog is using own template <code>content_blog.html</code>.</p>
 <h3 id="how-to-register-personal-templates">How to register personal templates?</h3>
-<ul>
-<li>Create an path in your custom extension <code>templates</code> folder - <code>content/display</code></li>
-<li>In this folder create an template with an name like this <code>content_article.html</code>, where <code>content</code> is the prefix and <code>article</code> is your custom content type. This will use it instead of <code>content.html</code> template that is used without the content type specific template.</li>
-<li>Copy the content of <code>content.html</code> template into your new template and modify it as you wish.</li>
-</ul>
+<p>Create a path in your custom extension <code>templates</code> folder - <code>content/display</code>.</p>
+<p>In this folder create a template with a name like this <code>content_article.html</code>, where <code>content</code> is the prefix and <code>article</code> is your custom content type. This will use it instead of <code>content.html</code> template that is used without the content type specific template.</p>
+<p>Copy the content of <code>content.html</code> template into your new template and modify it as you wish.</p>
 <h3 id="working-with-templates">Working with templates</h3>
 <p>In the default template you can see that the content is called in loop, which is not something that you need for some Content types.</p>
-<p>Example:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>{%- for field in schema.content_fields -%}
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    {%- if field.field_name not in exclude_fields
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>            and field.display_snippet is not none -%}
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>        {%- snippet &#39;content/snippets/display_field.html&#39;,
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>            field=field, data=content.data, schema=schema -%}
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    {%- endif -%}
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>{%- endfor -%}
-</span></code></pre></div></p>
-<p>You can avoid this and call your fields where needed, when needed individually:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>If you want to use the display snippet
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>{% set fields = schema.content_fields %}
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>{%- snippet &#39;content/snippets/display_field.html&#39;, field=h.content_field_by_name(fields,&#39;notes&#39;), data=content.data, schema=schema -%}
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>If you want to manipulate with the data on your own
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>&lt;a class=&quot;btn btn-primary&quot; href=&quot;{{ h.uploaded_file_url(content.data.attached_document) }}&quot;&gt;
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>    {{ &#39;Download Document&#39; }}
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>&lt;/a&gt;
-</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>
-</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>or 
-</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>
-</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>{{ content.data.notes }}
-</span></code></pre></div></p>
+<p>Example:</p>
+<div class="language-jinja highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="cp">{%</span>- <span class="k">for</span> <span class="nv">field</span> <span class="k">in</span> <span class="nv">schema.content_fields</span> -<span class="cp">%}</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="x">    </span><span class="cp">{%</span>- <span class="k">if</span> <span class="nv">field.field_name</span> <span class="k">not</span> <span class="k">in</span> <span class="nv">exclude_fields</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>            <span class="k">and</span> <span class="nv">field.display_snippet</span> <span class="k">is</span> <span class="k">not</span> <span class="nf">none</span> -<span class="cp">%}</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="x">        </span><span class="cp">{%</span>- <span class="k">snippet</span> <span class="s1">&#39;content/snippets/display_field.html&#39;</span><span class="o">,</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>            <span class="nv">field</span><span class="o">=</span><span class="nv">field</span><span class="o">,</span> <span class="nv">data</span><span class="o">=</span><span class="nv">content.data</span><span class="o">,</span> <span class="nv">schema</span><span class="o">=</span><span class="nv">schema</span> -<span class="cp">%}</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="x">    </span><span class="cp">{%</span>- <span class="k">endif</span> -<span class="cp">%}</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="cp">{%</span>- <span class="k">endfor</span> -<span class="cp">%}</span>
+</span></code></pre></div>
+<p>You can avoid this and call your fields where needed, when needed individually:</p>
+<div class="language-jinja highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="cp">{%</span> <span class="k">set</span> <span class="nv">fields</span> <span class="o">=</span> <span class="nv">schema.content_fields</span> <span class="cp">%}</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="cp">{%</span>- <span class="k">snippet</span> <span class="s1">&#39;content/snippets/display_field.html&#39;</span><span class="o">,</span> <span class="nv">field</span><span class="o">=</span><span class="nv">h.content_field_by_name</span><span class="o">(</span><span class="nv">fields</span><span class="o">,</span><span class="s1">&#39;notes&#39;</span><span class="o">),</span> <span class="nv">data</span><span class="o">=</span><span class="nv">content.data</span><span class="o">,</span> <span class="nv">schema</span><span class="o">=</span><span class="nv">schema</span> -<span class="cp">%}</span>
+</span></code></pre></div>
+<p>If you want to manipulate with the data on your own:</p>
+<div class="language-jinja highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="x">&lt;a class=&quot;btn btn-primary&quot; href=&quot;</span><span class="cp">{{</span> <span class="nv">h.uploaded_file_url</span><span class="o">(</span><span class="nv">content.data.attached_document</span><span class="o">)</span> <span class="cp">}}</span><span class="x">&quot;&gt;</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="x">    </span><span class="cp">{{</span> <span class="s1">&#39;Download Document&#39;</span> <span class="cp">}}</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="x">&lt;/a&gt;</span>
+</span></code></pre></div>
+<p>Or:</p>
+<div class="language-jinja highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="cp">{{</span> <span class="nv">content.data.notes</span> <span class="cp">}}</span>
+</span></code></pre></div>
 <p>Here is an example of default Blog template:</p>
-<p><img alt="Blog default page" src="../assets/blog_default.png" /></p>
+<p><a class="glightbox" href="../assets/blog_default.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Blog default page" src="../assets/blog_default.png" /></a></p>
 <p>And modified:</p>
-<p><img alt="Blog modified page" src="../assets/blog_modified.png" /></p>
-<p>The main template is extends the <code>page.html</code> template in an way, where you can modify different level of the page.</p>
+<p><a class="glightbox" href="../assets/blog_modified.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Blog modified page" src="../assets/blog_modified.png" /></a></p>
+<p>The main template extends the <code>page.html</code> template in a way, where you can modify different level of the page.</p>
 <h2 id="search-pages">Search pages</h2>
-<p>To create an Search page for your content, you'll need to register an Blueprint as usually done in CKAN.
-There is an small example of Search page that showing Pages content type tiles at <code>/content/search-example-1</code>. Its shown only to Sysadmins.</p>
-<p><img alt="Search Example" src="../assets/search_example.png" /></p>
-<p>You can use this example as an starting point for your custom Search pages. The code is stored at <code>views/simple_search.py</code> -&gt; <code>simple_search_1</code>. It already adds query ability and pagination, other filters can be added depending on your content type and requirements.</p>
+<p>To create a Search page for your content, you'll need to register a Blueprint as usually done in CKAN.</p>
+<p>There is a small example of Search page that showing Pages content type tiles at <code>/content/search-example-1</code>. Its shown only to Sysadmins.</p>
+<p><a class="glightbox" href="../assets/search_example.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Search Example" src="../assets/search_example.png" /></a></p>
+<p>You can use this example as a starting point for your custom Search pages. The code is stored at <code>views/simple_search.py</code> -&gt; <code>simple_search_1</code>. It already adds query ability and pagination, other filters can be added depending on your content type and requirements.</p>
 
 
 
@@ -910,5 +844,7 @@ There is an small example of Search page that showing Pages content type tiles a
       <script src="../assets/javascripts/bundle.c8b220af.min.js"></script>
       
     
-  </body>
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
 </html>
